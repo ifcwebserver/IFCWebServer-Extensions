@@ -1,0 +1,3 @@
+class IFCMEASUREWITHUNIT
+
+end
