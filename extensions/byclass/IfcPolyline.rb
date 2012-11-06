@@ -80,6 +80,7 @@ attr_accessor :x_min, :x_max ,:y_min , :y_max
 		obj=$ifcObjects[p.to_i]		
 		pnt=obj.points.gsub("#","").sub("(","").sub(")","").split(',') 
 		obj.points.to_s.toIfcObject			
+		#puts pnt.to_s + "<br>"		
 		x=[];y=[];z=[]
 		(pnt.length).times do |i|
 			p=$ifcObjects[pnt[i].to_i]
@@ -295,6 +296,7 @@ attr_accessor :x_min, :x_max ,:y_min , :y_max
 		end
 		dae = dae + "<linestrips count='" + (points_list.length+not_closed).to_s + "' material='" + $dae_mat +  "'>"
 		dae = dae + "    <input offset='0' semantic='VERTEX' source='#vertices_" + @line_id.to_s + "' />"
+		#dae = dae + "<vcount>" + (points_list.length+not_closed).to_s + "</vcount>"
 		dae = dae + " <p>"
 		(points_list.length).times do |i|
 			dae = dae + i.to_s + " "

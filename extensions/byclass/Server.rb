@@ -20,15 +20,14 @@ class Server
 	end
 	
 	def self.classes_list(m1)
-		if File.exist?($ifc_path + "/cache/" + $username +"/"  + m1 +".rb")
-		load $ifc_path + "/cache/" + $username +"/"  + m1 +".rb"
-		$list_of_objects
-		else
-			{}
-		end
+	if File.exist?($ifc_path + "/cache/" + $username +"/"  + m1 +".rb")
+	load $ifc_path + "/cache/" + $username +"/"  + m1 +".rb"
+	$list_of_objects
+	else
+		{}
+	end
 	end
 	
 	def version
-	"1.0"
 	end
 end
