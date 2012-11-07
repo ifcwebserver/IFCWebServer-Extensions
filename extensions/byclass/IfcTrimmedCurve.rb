@@ -4,9 +4,7 @@ class IFCTRIMMEDCURVE
 	end
 	
 	def initialize1(args=[])		
-		#	if IFCTRIMMEDCURVE::VAR_NUM != args.size 
 		parse
-		#	end			
 	end
 #private
 	def parse

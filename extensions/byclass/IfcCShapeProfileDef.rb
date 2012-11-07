@@ -14,7 +14,6 @@ class IFCCSHAPEPROFILEDEF
 	def to_svg
 	end
 	
-	def svg
-	
+	def svg	
 	end
 end

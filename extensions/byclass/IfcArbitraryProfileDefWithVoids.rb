@@ -1,11 +1,11 @@
 class IFCARBITRARYPROFILEDEFWITHVOIDS
 	def area
-	totalArea= super.area
-	voidsArea=0
-	@innerCurves.toIfcObject { |k,v|
-	voidsArea += v.area if v.respond_to?('area')
-	}
-	totalArea - voidsArea
+		totalArea= super.area
+		voidsArea=0
+		@innerCurves.toIfcObject { |k,v|
+		voidsArea += v.area if v.respond_to?('area')
+		}
+		totalArea - voidsArea
 	end	
 	
 	def xyz_array

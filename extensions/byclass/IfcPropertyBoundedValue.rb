@@ -1,3 +1,2 @@
 class IFCPROPERTYBOUNDEDVALUE
-
 end

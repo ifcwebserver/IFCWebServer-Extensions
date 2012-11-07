@@ -3,10 +3,7 @@ class IFCRELAGGREGATES
 	attach_to_obj if $loading_relation == true
 	end
 	
-	
-	
 	def attach_to_obj
 		super		
-	end
-	
+	end	
 end

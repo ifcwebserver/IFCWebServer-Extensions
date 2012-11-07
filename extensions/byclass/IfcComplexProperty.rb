@@ -13,8 +13,8 @@ class IFCCOMPLEXPROPERTY
 	end
 	
 	def to_table
-	res= "<table class='propertyset'>"
-	res += to_row
-	res += "</table>"	
+		res= "<table class='propertyset'>"
+		res += to_row
+		res += "</table>"	
 	end
 end

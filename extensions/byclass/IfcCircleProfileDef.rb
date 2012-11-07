@@ -1,9 +1,9 @@
 class IFCCIRCLEPROFILEDEF
 	def area
-		(3.141592653589*@radius.to_f*@radius.to_f*$ifcUnit["Length"]*$ifcUnit["Length"]).to_f.round_to(3)
+		(Math::PI*@radius.to_f*@radius.to_f*$ifcUnit["Length"]*$ifcUnit["Length"]).to_f.round_to(3)
 	end
 	def perimeter
-		(2*3.141592653589*@radius.to_f*$ifcUnit["Length"]).to_s
+		(2*Math::PI*@radius.to_f*$ifcUnit["Length"]).to_s
 	end
 	def xyz_array
 		@position.toIfcObject
@@ -12,8 +12,8 @@ class IFCCIRCLEPROFILEDEF
 		res=[]	
 		n=16
 		(n).times { |i|
-		res << (@radius.to_f*(Math.cos(((3.141592653589)/180)*((360/n)*i))) + x).to_s + " "
-		res << (@radius.to_f*(Math.sin(((3.141592653589)/180)*((360/n)*i))) + y).to_s + " "
+		res << (@radius.to_f*(Math.cos(((Math::PI)/180)*((360/n)*i))) + x).to_s + " "
+		res << (@radius.to_f*(Math.sin(((Math::PI)/180)*((360/n)*i))) + y).to_s + " "
 		res << "z "
 		}		
 		return  res		
@@ -26,8 +26,8 @@ class IFCCIRCLEPROFILEDEF
 		res=[]	
 		n=16
 		(n).times { |i|
-		res << (@radius.to_f*(Math.cos(((3.141592653589)/180)*((360/n)*i))) + x).to_s + " "
-		res << (@radius.to_f*(Math.sin(((3.141592653589)/180)*((360/n)*i))) + y).to_s + " "		
+		res << (@radius.to_f*(Math.cos(((Math::PI)/180)*((360/n)*i))) + x).to_s + " "
+		res << (@radius.to_f*(Math.sin(((Math::PI)/180)*((360/n)*i))) + y).to_s + " "		
 		}		
 		return  res		
 	end

@@ -5,12 +5,10 @@ class IFCCIRCLEHOLLOWPROFILEDEF
 	end
 	def perimeter
 		(2*Math::PI*@radius.to_f*$ifcUnit["Length"]).to_s
-	end
-	
+	end	
 	
 	def xyz_array	
-	end
-	
+	end	
 	
 	def to_svg
 		SVG.to_svg(self)

@@ -21,6 +21,14 @@ class IFCCLASSIFICATIONREFERENCE
 		obj.instance_variable_set("@ext_ClassificationReference_Description",@description.to_s)				if @description.to_s != "" and @description.to_s != "$"
 	end
 	
+
+	#SET OF IfcRelAssociatesClassification FOR RelatingClassification;
+	def classificationRefForObjects	
+	end
+	
+	#SET OF IfcClassificationReference FOR ReferencedSource;
+	def hasReferences	
+	end
 	
 #private
 	def parse

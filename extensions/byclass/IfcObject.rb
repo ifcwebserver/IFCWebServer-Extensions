@@ -1,16 +1,18 @@
 class IFCOBJECT
-	def isDefinedBy
-	 #SET OF IfcRelDefines FOR RelatedObjects;
+	
+	#SET OF IfcRelDefines FOR RelatedObjects;
+	def isDefinedBy	
 	end
 	
-	def isDeclaredBy
 	#SET [0:1] OF IfcRelDefinesByObject FOR RelatedObjects;
-	end
-	def declares	 
-	#SET OF IfcRelDefinesByObject FOR RelatingObject;
+	def isDeclaredBy	
 	end
 	
-	def isTypedBy	 
+	#SET OF IfcRelDefinesByObject FOR RelatingObject;
+	def declares	
+	end
+	
 	#SET [0:1] OF IfcRelDefinesByType FOR RelatedObjects;
+	def isTypedBy	
 	end
 end

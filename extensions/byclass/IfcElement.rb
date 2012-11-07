@@ -29,8 +29,8 @@ class IFCELEMENT
 	def referencedBy	
 	end
 	
-	def hasStructuralMember
 	#SET [0:?] OF IfcRelConnectsStructuralElement FOR RelatingElement;
+	def hasStructuralMember	
 	end
 	
 	def fillsVoids
@@ -76,8 +76,9 @@ class IFCELEMENT
 		""	
 	end
 	
-	def hasPorts
-	#SET [0:?] OF IfcRelConnectsPortToElement FOR RelatedElement;	
+	
+	#SET [0:?] OF IfcRelConnectsPortToElement FOR RelatedElement;
+	def hasPorts		
 	end
 	
 	def hasOpenings

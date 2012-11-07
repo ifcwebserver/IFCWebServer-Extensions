@@ -64,6 +64,12 @@ attr_accessor :x_min, :x_max ,:y_min , :y_max
 		return  "#@x_min,#@y_min,#@x_max,#@y_max"
 	end
 	
+	def to_xml(obj=self)
+	xml=""
+	@points.to_s.toIfcObject.each { |k,o| xml= xml + "\n" + o.to_xml }
+	"\n<IFCPOLYLINE LINEID='"  + @line_id.to_s + "'>" + xml  + "\n</IFCPOLYLINE>"
+	end
+	
 	def to_svg
 		SVG.to_svg(self)
 	end
@@ -118,69 +124,6 @@ attr_accessor :x_min, :x_max ,:y_min , :y_max
 		return res_svg
 	end
 	
-	def to_svg_old(polylist=@line_id)
-		$svgFile= File.new("svg/" +  $username + "/" + @line_id.to_s + ".svg",  "w")
-		res= ""
-		res=res + "<?xml version='1.0' encoding='UTF-8'?>\n<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>\n"
-		res=res + "<html xmlns='http://www.w3.org/1999/xhtml'  xmlns:svg='http://www.w3.org/2000/svg'   xmlns:xlink='http://www.w3.org/1999/xlink'>\n"
-		res=res + "<head>\n<title></title>\n</head>\n<body>\n"
-		res_svg=""
-		res_svg = res_svg + svg( polylist.to_s )
-		res=res + res_svg 
-		res=res +"\n</body>\n</html>"
-		$svgFile.puts res_svg
-		return  @line_id.to_s + ".svg"
-	end	
-	
-	def svg_old(polylist=@line_id)	
-		@points.to_s.toIfcObject
-		res_svg = "<svg version='1.1' xmlns='http://www.w3.org/2000/svg' width='100%' height='100%' preserveAspectRatio='xMinYmin meet' >\n"
-		style ="stroke:red;stroke-width:0.01;fill:gray;opacity:0.75"
-		style1 ="stroke:red;stroke-width:0.01;fill:#ffffff;opacity:1"
-		counter=0
-		polylist.to_s.sub("#","").split('#').each { |p|		
-		counter +=1
-		("#"+p).toIfcObject
-		obj=$ifcObjects[p.to_i]		
-		pnt=obj.points.gsub("#","").sub("(","").sub(")","").split(',') 
-		obj.points.to_s.toIfcObject			
-		#puts pnt.to_s + "<br>"		
-		x=[];y=[];z=[]
-		(pnt.length-1).times do |i|
-			p=$ifcObjects[pnt[i].to_i]
-			x[i]=p.x.to_f
-			y[i]=p.y.to_f
-			z[i]=p.z.to_f
-		end	
-		x_min=x.min;x_max=x.max;y_min=y.min;y_max=y.max;z_min=z.min;z_max=z.max				
-		scale=$ifcUnit["Length"]
-		res_svg=res_svg + "<g transform=\" scale(" + scale.to_s  + ") \">"
-		if pnt.length == 3
-			res_svg = res_svg + "<path style=\"stroke:rgb(99,99,99);stroke-width:2\" d=\"m " + x[0].round_to(2).to_s + "," + y[0].round_to(2).to_s + "," + x[1].round_to(2).to_s + "," + y[1].round_to(2).to_s + "\" id=\"" + @line_id.to_s + "\"/>\n</g>"
-		else	
-			res_svg=res_svg + "<polyline   points='"	
-			(pnt.length).times do |i|
-				next if x[i] == nil
-				if z_min == z_max 
-					res_svg = res_svg + x[i].round_to(2).to_s + "," + y[i].round_to(2).to_s + " "
-				elsif y_min == y_max 
-					res_svg = res_svg + x[i].round_to(2).to_s + "," + z[i].round_to(2).to_s + " "
-				elsif x_min== x_max
-					res_svg = res_svg + y[i].round_to(2).to_s + "," + z[i].round_to(2).to_s + " "		
-				else				
-				end
-			end	
-			if counter == 1
-				res_svg += "' style='" + style + "'/>\n</g>"
-			else
-				res_svg +=  "' style='" + style1 + "'/>\n</g>"
-			end
-		end
-		}
-		res_svg += "</svg>"		
-		return res_svg
-	end
-
 	def area
 		area=0
 		@points.to_s.toIfcObject

@@ -1,3 +1,2 @@
-class IFCSLAB
-	
+class IFCSLAB	
 end
