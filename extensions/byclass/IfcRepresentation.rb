@@ -1,4 +1,19 @@
 class IFCREPRESENTATION
+	def ofProductRepresentation
+	#Invers Att: SET [0:1] OF IfcProductRepresentation FOR Representations;
+	 IFCPRODUCTREPRESENTATION.where("o.representations.to_obj.line_id == " + @line_id.to_s,"o").uniq
+	end
+	
+	def layerAssignments
+	#Invers Att:  	SET OF IfcPresentationLayerAssignment FOR AssignedItems;
+	
+	end
+	
+	def representationMap
+	#Invers Att:SET [0:1] OF IfcRepresentationMap FOR MappedRepresentation;
+	 
+	end
+	
 	def area
 		@items_list = @items.delete("(").delete(")").gsub("#","").split(",")
 		@items_list.toIfcObject

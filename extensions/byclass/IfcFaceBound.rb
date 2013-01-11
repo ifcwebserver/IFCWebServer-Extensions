@@ -13,9 +13,9 @@ class IFCFACEBOUND
 		res=""	
 		@bound.toIfcObject
 		obj= $ifcObjects[@bound.delete("#").to_i]
-			if obj.respond_to?('to_mesh')
-				res=res + obj.to_mesh
-			end		
+		if obj.respond_to?('to_mesh')
+			res=res + obj.to_mesh
+		end		
 		return res	
 	end
 	
@@ -24,7 +24,7 @@ class IFCFACEBOUND
 	end
 	
 	
-	def to_dae_geometry
+	def to_dae_geometry(mesh_id="")
 		Dae.to_dae_geometry(@bound)
 	end
 	

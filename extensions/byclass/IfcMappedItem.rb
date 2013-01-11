@@ -29,7 +29,7 @@ class IFCMAPPEDITEM
 		Dae.attribute_to_dae(items,objectPlacement)			
 	end
 	
-	def to_dae_geometry(local=nil)	
+	def to_dae_geometry(mesh_id="")	
 		@mappingSource.to_s.toIfcObject
 		@mappingTarget.to_s.toIfcObject
 		$ifcObjects[@mappingSource.delete("#").to_i].mappedRepresentation.to_s.toIfcObject

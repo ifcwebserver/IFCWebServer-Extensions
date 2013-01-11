@@ -147,7 +147,7 @@ class IFCEXTRUDEDAREASOLID
 		res = res  + "<vertices id=\"vertices_line_id\">\n".sub("line_id",@line_id.to_s)
 		res = res  + "<input semantic=\"POSITION\" source=\"#source_pos_line_id\" />\n".sub("line_id",@line_id.to_s)
 		res = res  + "</vertices>\n"
-		res = res  + "<polylist count=\"" + (n + 2).to_s + " \" material=\"Material\">\n".sub("n+2",(n+2).to_i.to_s)
+		res = res  + "<polylist count=\"" + (n + 2).to_s + " \" material='Material' >\n".sub("n+2",(n+2).to_i.to_s)
 		res = res  + "<input offset=\"0\" semantic=\"VERTEX\" source=\"#vertices_line_id\" />\n".sub("line_id",@line_id.to_s)
 		res = res + " <input offset=\"1\" semantic=\"NORMAL\" source=\"#normals_" + @line_id.to_s + "\" />\n"
 		res = res  + "<vcount>" + n.to_s + " " + n.to_s
@@ -202,19 +202,30 @@ class IFCEXTRUDEDAREASOLID
 		#	res= res + "<rotate>1.0 0.0 0.0 -90</rotate>"
 		#end	
 		res=res +   "<instance_geometry url=\"#IFCEXTRUDEDAREASOLID_line_id\">\n".sub("line_id",@line_id.to_s)
-		res=res +   "<bind_material>\n<technique_common>\n<instance_material symbol=\"Material\" target=\"#" + $dae_mat + "\"/>\n</technique_common>\n</bind_material>"
+		res=res +   "<bind_material>\n<technique_common>\n<instance_material symbol='Material' target=\"#" + $dae_mat + "\"/>\n</technique_common>\n</bind_material>"
 		res=res +   "</instance_geometry>"
 		res=res +   "</node>"
 		return res
 	end
 
+	def svg(scale=1,transformation="")
+		@sweptArea.toIfcObject		
+		o=$ifcObjects[@sweptArea.delete("#").to_i]
+		if o.respond_to?('svg')
+			pos = @position.to_obj
+			o.svg(scale,'transform="translate(' + pos.x.to_s + ',' +  pos.y.to_s + ') scale(' + scale.to_s + ')"' )
+		else
+			$log["<br>Line:" + __LINE__.to_s ]= "  " +  o.class.to_s + "svg() is not yet supported"			
+		end
+	end
+	
 	def to_svg
 		@sweptArea.toIfcObject		
 		o=$ifcObjects[@sweptArea.delete("#").to_i]
 		if o.respond_to?('to_svg')
 			o.to_svg
 		else
-			$log["<br>Line:" + __LINE__.to_s ]= "  " +  o.class.to_s + "to_svg is not yet supported"
+			$log["<br>Line:" + __LINE__.to_s ]= "  " +  o.class.to_s + "to_svg is not yet supported"			
 		end
-	end
+	end	
 end

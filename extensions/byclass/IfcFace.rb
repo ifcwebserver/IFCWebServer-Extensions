@@ -5,9 +5,9 @@ class IFCFACE
 		@bounds.to_s.gsub(",","").sub("(","").sub(")","").split("#").each { |bound|
 		next if bound == ""		
 		obj= $ifcObjects[bound.to_i]
-			if obj.respond_to?('to_mesh')
-				res=res + obj.to_mesh
-			end
+		if obj.respond_to?('to_mesh')
+			res=res + obj.to_mesh
+		end
 		}
 		return res	
 	end
@@ -30,7 +30,7 @@ class IFCFACE
 		Dae.attribute_to_dae(@bounds,objectPlacement)		
 	end	
 	
-	def to_dae_geometry
+	def to_dae_geometry(mesh_id="")
 		Dae.to_dae_geometry(@bounds)		
 	end
 	

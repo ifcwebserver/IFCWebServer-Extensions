@@ -3,7 +3,7 @@ class IFCGEOMETRICCURVESET
 		Dae.attribute_to_dae(@elements,objectPlacement)
 	end
 	
-	def to_dae_geometry(mesh_id)
+	def to_dae_geometry(mesh_id="")
 		Dae.to_dae_geometry(@elements,mesh_id)
 	end
 	

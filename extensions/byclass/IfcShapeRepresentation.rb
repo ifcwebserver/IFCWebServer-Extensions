@@ -4,12 +4,22 @@ class IFCSHAPEREPRESENTATION
 	end	
 	
 	def to_dae_node(local=nil)		
+	    res = ""
 		@items.to_s.toIfcObject.each { |k,v|
-		Dae.to_dae_node(v,local,"",v.class.to_s + "_" + v.line_id.to_s)
+		res += Dae.to_dae_node(v,local,"",v.class.to_s + "_" + v.line_id.to_s)
 		}
+		res
 	end	
 	
-	def to_dae(objectPlacement=nil,*args)	
-		Dae.attribute_to_dae(@items,objectPlacement)
+	def to_dae(objectPlacement=nil,*args)
+		Dae.attribute_to_dae(@items,objectPlacement,self.class.to_s,@line_id.to_s)
+	end
+	
+	def volume
+	volume= 0
+	@items.to_s.toIfcObject.each { |k,v|
+	volume += v.volume.to_f if v.respond_to?('volume')  
+	}
+	volume	
 	end
 end

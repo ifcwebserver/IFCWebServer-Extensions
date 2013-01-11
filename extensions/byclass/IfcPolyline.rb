@@ -74,11 +74,12 @@ attr_accessor :x_min, :x_max ,:y_min , :y_max
 		SVG.to_svg(self)
 	end
 	
-	def svg(scale=1)
-		@points.to_s.toIfcObject
-		res_svg = ""		
-		style ="stroke:red;stroke-width:0.01;fill:gray;opacity:0.75"
-		style1 ="stroke:red;stroke-width:0.01;fill:#ffffff;opacity:1"
+	def svg(scale=1,transformation="")
+	    res=""
+		@points.to_s.toIfcObject		
+		style = " style=\"stroke:red;stroke-width:0.01;fill:gray;opacity:0.75\" "
+	    style=$svg_style if $svg_style != nil		
+		style1 =" style='stroke:red;stroke-width:0.01;fill:#ffffff;opacity:1' "
 		counter=0
 		@line_id.to_s.sub("#","").split('#').each { |p|		
 		counter +=1
@@ -94,34 +95,36 @@ attr_accessor :x_min, :x_max ,:y_min , :y_max
 			y[i]=p.y.to_f
 			z[i]=p.z.to_f
 		end	
-		x_min=x.min;x_max=x.max;y_min=y.min;y_max=y.max;z_min=z.min;z_max=z.max				
-		res_svg=res_svg + "<g transform='translate(" + (-1.05*x_min*scale).to_s  + "," +  (-1.05*y_min*scale).to_s + ") scale(" + scale.to_s + ")'>"
+		x_min=x.min;x_max=x.max;y_min=y.min;y_max=y.max;z_min=z.min;z_max=z.max		
+		if	transformation== ""
+			transformation= " transform='translate(" + (-1.05*x_min*scale).to_s  + "," +  (-1.05*y_min*scale).to_s + ") scale(" + scale.to_s + ")'"
+		end
+		res += "<g " + transformation + " >"
 		if pnt.length == 3
-			res_svg = res_svg + "<path  d=\"m " + x[0].round_to(2).to_s + "," + y[0].round_to(2).to_s + "," 
-			res_svg = res_svg + x[1].round_to(2).to_s + "," + y[1].round_to(2).to_s + "\" id=\"" + @line_id.to_s + "\"/>\n</g>"
+			res +=   "<path  d=\"m " + x[0].round_to(2).to_s + "," + y[0].round_to(2).to_s + "," 
+			res +=  x[1].round_to(2).to_s + "," + y[1].round_to(2).to_s + "\" id=\"" + @line_id.to_s + "\"/>\n</g>"
 		else	
-			res_svg=res_svg + "<polyline points='"	
+			res += "<polyline points='"	
 			(pnt.length).times do |i|
 				next if x[i] == nil
 				if z_min == z_max 
-					res_svg = res_svg + x[i].round_to(2).to_s + "," + y[i].round_to(2).to_s + " "
+					res += x[i].round_to(2).to_s + "," + y[i].round_to(2).to_s + " "
 				elsif y_min == y_max 
-					res_svg = res_svg + x[i].round_to(2).to_s + "," + z[i].round_to(2).to_s + " "
+					res += x[i].round_to(2).to_s + "," + z[i].round_to(2).to_s + " "
 				elsif x_min== x_max
-					res_svg = res_svg + y[i].round_to(2).to_s + "," + z[i].round_to(2).to_s + " "		
+					res += y[i].round_to(2).to_s + "," + z[i].round_to(2).to_s + " "		
 				else				
 				end
 			end	
 			if counter == 1
-				res_svg += "' style='" + style + "'/>\n</g>"
+				res += "' " + style + " />\n</g>"
 			else
-				res_svg +=  "' style='" + style1 + "'/>\n</g>"
+				res += "' " + style1 + " />\n</g>"
 			end
 		end
-		}
-		res_svg += "</svg>"	
-		res_svg = "<svg version='1.1' xmlns='http://www.w3.org/2000/svg' width='300' height='300' >\n" + res_svg
-		return res_svg
+		}	
+		
+		res
 	end
 	
 	def area
@@ -141,7 +144,7 @@ attr_accessor :x_min, :x_max ,:y_min , :y_max
 			#area += (p1.y + p.y)*(p1.z - p.z) if p1.z != nil and p1.x ==  p.x  
 			#area += (p1.x + p.x)*(p1.z - p.z) if p1.z != nil and p1.y ==  p.y 			
 		end		
-		return ((area * 0.5).abs*$ifcUnit["Length"]*$ifcUnit["Length"])	
+		((area * 0.5).abs*$ifcUnit["Length"]*$ifcUnit["Length"])	
 	end	
 	
 	def perimeter
@@ -237,7 +240,7 @@ attr_accessor :x_min, :x_max ,:y_min , :y_max
 		else
 			not_closed=0
 		end
-		dae = dae + "<linestrips count='" + (points_list.length+not_closed).to_s + "' material='" + $dae_mat +  "'>"
+		dae = dae + "<linestrips count='" + (points_list.length+not_closed).to_s + "' material='Material'>"
 		dae = dae + "    <input offset='0' semantic='VERTEX' source='#vertices_" + @line_id.to_s + "' />"
 		#dae = dae + "<vcount>" + (points_list.length+not_closed).to_s + "</vcount>"
 		dae = dae + " <p>"
@@ -265,7 +268,7 @@ attr_accessor :x_min, :x_max ,:y_min , :y_max
 		dae_node=dae_node + "<instance_geometry url='#IFCPOLYLINE_mesh_" + @line_id.to_s + "'>"
 		dae_node=dae_node + "<bind_material>"
 		dae_node=dae_node + "<technique_common>"
-		dae_node=dae_node + "<instance_material symbol='" + $dae_mat +  "' target='#" + $dae_mat + "'>"
+		dae_node=dae_node + "<instance_material symbol='Material' target='#" + $dae_mat + "'>"
 		#dae_node=dae_node + "<bind_vertex_input semantic='UVSET0' input_semantic='TEXCOORD' input_set='0' />"
 		dae_node=dae_node + "</instance_material>"
 		dae_node=dae_node + "</technique_common>"
@@ -273,6 +276,16 @@ attr_accessor :x_min, :x_max ,:y_min , :y_max
 		dae_node=dae_node + "</instance_geometry>"
 		dae_node=dae_node + "</node>"				
 		return dae_node
+	end
+	
+	def self.new_from_points_array(xy_array=[])	
+	  @points=""
+	  xy_array.each { |point|
+	    point_id =  new_id
+	    @points += "#" + point_id.to_s + ","
+	    IFCCARTESIANPOINT.new(point_id,["(" + point[0].to_s  + "," + point[1].to_s + ")"])
+	  }	
+	  self.new(new_id,["(" + @points[0..-2] +")"])
 	end
 	
 	private

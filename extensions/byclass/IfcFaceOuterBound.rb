@@ -3,7 +3,7 @@ class IFCFACEOUTERBOUND
 		Dae.to_dae(self,objectPlacement)
 	end
 	
-	def to_dae_geometry
+	def to_dae_geometry(mesh_id="")
 		Dae.to_dae_geometry(@bound)		
 	end
 	

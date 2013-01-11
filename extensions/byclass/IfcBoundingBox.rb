@@ -54,7 +54,7 @@ class IFCBOUNDINGBOX
 	def center
 	end
 #private	
-	def to_dae_geometry
+	def to_dae_geometry(mesh_id="")
 		@corner.toIfcObject
 		dae=""			
 		dae = dae + "<geometry id='" +  "IFCBOUNDINGBOX_mesh_" + @line_id.to_s + "'>"

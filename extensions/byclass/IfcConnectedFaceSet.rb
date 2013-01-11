@@ -5,7 +5,7 @@ class IFCCONNECTEDFACESET
 		Dae.to_dae(self,objectPlacement)		
 	end	
 		
-	def to_dae_geometry	
+	def to_dae_geometry(mesh_id="")
 		@cfsFaces.toIfcObject
 		@cfsFaces_list = @cfsFaces.delete("(").delete(")").gsub("#","").split(",")		
 		dae =""
@@ -43,7 +43,7 @@ class IFCCONNECTEDFACESET
 		dae = dae + "<vertices id=\"vertices_" + @line_id.to_s + "\">\n"
 		dae = dae + "    <input semantic=\"POSITION\" source=\"#s_" + @line_id.to_s + "\"/>\n"
 		dae = dae + "</vertices>\n"				
-		dae = dae + "<polylist count=\"" + polylist_count.to_s + "\" material=\"" + $dae_mat +  "\">\n"
+		dae = dae + "<polylist count=\"" + polylist_count.to_s + "\" material='Material' >\n"
 		dae = dae + "    <input offset=\"0\" semantic=\"VERTEX\" source=\"#vertices_" + @line_id.to_s + "\" />\n"
 		dae = dae + "    <input offset=\"1\" semantic=\"NORMAL\" source=\"#normals_" + @line_id.to_s + "\" />\n"
 		dae = dae + "<vcount>" + vcount + "</vcount>"

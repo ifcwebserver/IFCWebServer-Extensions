@@ -3,7 +3,7 @@ class IFCREPRESENTATIONMAP
 		 Dae.attribute_to_dae(@mappedRepresentation,@mappingOrigin)
 	end
 	 
-	def to_dae_geometry(local=nil)
+	def to_dae_geometry(mesh_id=nil)
 		Dae.to_dae_geometry(@mappedRepresentation)
 	end
 
