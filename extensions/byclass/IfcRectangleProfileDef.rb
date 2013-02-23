@@ -31,14 +31,14 @@ class IFCRECTANGLEPROFILEDEF
 		SVG.to_svg(self)		
 	end
 	
-	def svg(scale=1)
-		#scale=100 if @xDim.to_f < 1 or @yDim.to_f < 1		
-		res = "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\""
-		res += " width=\"" +  (1.1*scale*@xDim.to_f).to_s + "\" height=\"" + (1.1*scale*@yDim.to_f).to_s + "\" >"
-		res += "<rect width=\"" + (scale*@xDim.to_f).to_s + "\" height=\"" + (scale*@yDim.to_f).to_s + "\" style=\"fill:gray;stroke-width:0.01;stroke:rgb(255,0,0)\"/>\n</svg>"
-		res += "<font size=\"1\">"
-		res += "</br>scale=" + scale.to_f.to_s if scale != 1
-		res += "</br>xDim=" + @xDim.to_f.to_s + "</br>yDim=" + @yDim.to_f.to_s + "</font>"	
-		return res
+	def svg(scale=1,transformation="")	
+	  style = " style=\"fill:gray;stroke-width:0.01;stroke:rgb(255,0,0)\" "
+	  style=$svg_style if $svg_style != nil
+	  if transformation == ""
+	    transformation= " transform=\" scale(" + scale.to_s + "," + scale.to_s + ")\""
+	  end
+	  res = "<g " + transformation + " >"				  
+	  res += "<rect width=\"" + (@xDim.to_f).to_s + "\" height=\"" + (@yDim.to_f).to_s + "\" " + style + " /></g>"				
+	  return res
 	end	
 end

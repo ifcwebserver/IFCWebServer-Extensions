@@ -62,9 +62,6 @@ attr_accessor :html_properties
 	def PropertyDefinitionOf
 	end
 	
-	def hasAssociations
-	end	
-	
 	def definesType
 	end
 	

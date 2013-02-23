@@ -5,21 +5,11 @@ class IFCELEMENTQUANTITY
 		#res = res + "<br><b>Description:</b>" + @description + "<br>" if @description != "$"
 		#res = res +"<b>GlobalId:</b>" + @globalId 	+ "<br>"	
 		#res = res +"<b>IFC_LineID:</b>" + @line_id.to_s 		
-		res = res + "<table width='100%' class='propertyset'>\n"
-		res = res + "<tr><th colspan=5>" + @name.strip[1..-2] + "</th></tr>" if @name != "$"
-		res = res + "<tr><th></th><th>Value</th><th>Unit</th><th>Name</th><th>Description</th></tr>"
-		str.sub!("#","").sub!("(","").sub!(")","").split("#").each { |o|
-		if o != nil
-			o=o.to_s.strip.to_i
-			obj=$ifcObjects[o]			
-			if obj != nil
-				res = res +  obj.to_row	
-			else			
-			LineDataParser.load_one_object("#" + o.to_s,false)	
-			obj=$ifcObjects[o]
+		res = res + "<table  class='propertyset'>\n"
+		res = res + "<tr><th colspan=3>" + @name.strip[1..-2] + "</th></tr>" if @name != "$"
+		res = res + "<tr><th></th><th>Value</th><th>Unit</th></tr>"
+		str.toIfcObject.each { |k,obj|
 			res = res +  obj.to_row	
-			end
-		end
 		}
 		res = res + "\n</table>"
 		return res	

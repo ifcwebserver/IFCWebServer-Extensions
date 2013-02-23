@@ -35,11 +35,11 @@ class IFCARBITRARYCLOSEDPROFILEDEF
 		end
 	end
 	
-	def svg(scale=1)
+	def svg(scale=1,transformation="")
 	@outerCurve.toIfcObject
 	o=$ifcObjects[@outerCurve.delete("#").to_i]
 		if  o.respond_to?('svg')
-			o.svg(scale)
+			o.svg(scale,transformation)
 		else
 			$log["<br>Line:" + __LINE__.to_s ]= "  " +  o.class.to_s + ".to_svg() is not yet supported"
 		end	
@@ -49,7 +49,7 @@ class IFCARBITRARYCLOSEDPROFILEDEF
 		@outerCurve.toIfcObject
 		o=$ifcObjects[@outerCurve.delete("#").to_i]
 		if o.respond_to?('xyz_array')			
-			o.xyz_array.join
+			o.xyz_array #.join
 		else			
 			$log["<br>" + __FILE__.to_s + " Line:" + __LINE__.to_s ]= "  " +  o.class.to_s + ".xyz_array is not yet supported"
 		end

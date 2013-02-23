@@ -1,4 +1,20 @@
 class IFCSHAPEREPRESENTATION
+attr_accessor :preview
+  def initialize1(args)
+    preview
+    super
+  end
+   
+   def preview
+	if $shapeRepresentation != nil and $shapeRepresentation["#" + @line_id.to_s] != nil
+	  file_name=$ifc_file_name.sub(".ifc","") + "_" + $shapeRepresentation["#" + @line_id.to_s].sub("#","")
+	else
+	  file_name=$ifc_file_name.sub(".ifc","") + "_" + @line_id.to_s
+	end
+	 @preview = "<a href='sgl/?url=../temp/#$username/IfcShapeRepresentation/" + file_name + "'>"
+	 @preview += "<img width=100 src='temp/#$username/IfcShapeRepresentation/" + file_name + ".png' /></a>"
+   end
+  
 	def to_dae_geometry(mesh_id="")
 		Dae.to_dae_geometry(@items,mesh_id)		
 	end	

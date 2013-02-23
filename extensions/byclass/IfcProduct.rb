@@ -1,5 +1,21 @@
 class IFCPRODUCT
 attr_accessor :material
+  def initialize1(args=[])		
+    $depend_on={} if $depend_on == nil
+	if @representation.to_s != "" and @representation.to_s != "$"      
+	  $depend_on[@representation.to_s] ="" if $depend_on[@representation.to_s]== nil
+	  $depend_on[@representation.to_s] += "#" + @line_id.to_s if not $depend_on[@representation.to_s].include?("#" + @line_id.to_s)	  
+	end	
+  end 
+  
+  def referencedBy
+  	# :SET OF IfcRelAssignsToProduct FOR RelatingProduct; 
+		res=[]
+		IFCRELASSIGNSTOPRODUCT.where("(o.relatingProduct + ',').gsub(' ','').sub(')',',').include?'#" + @line_id.to_s + ",'","o.relatedObjects").to_a.join.toIfcObject.each { |k,v|
+		res << v
+		}
+		res
+  end
 	def area
 		@representation.toIfcObject
 		o=$ifcObjects[@representation.delete("#").to_i]

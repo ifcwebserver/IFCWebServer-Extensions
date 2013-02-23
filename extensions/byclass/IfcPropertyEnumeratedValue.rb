@@ -19,7 +19,7 @@ class IFCPROPERTYENUMERATEDVALUE
 		 else
 			selected= fix_it(@enumerationValues.to_s)
 		 end
-		 "<tr><th>" + fix_it(@name) + "</th><td>" + selected + "</td><td></td><td>" +@description + "</td></tr>"
+		 "<tr><th>" + fix_it(@name) + "</th><td>" + selected + "</td></tr>"
 	end
 	
 	def to_xml(obj)

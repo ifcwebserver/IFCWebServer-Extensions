@@ -1,9 +1,12 @@
 class IFCRELASSOCIATESMATERIAL
-	def initialize1(args=[])			
-		attach_to_obj
-	end
-	
-	def attach_to_obj
+  def initialize1(args=[])			
+	attach_to_obj
+	$depend_on={} if $depend_on == nil
+    $depend_on[@relatedObjects.to_s] ="" if $depend_on[@relatedObjects.to_s]== nil
+    $depend_on[@relatedObjects.to_s] += "#" + @line_id.to_s
+  end
+  
+  def attach_to_obj
 	#doc:<div class='documentaion' >This method will be called automatically if this extension is loaded (the class IfcRelAssociatesMaterial is selected and the caching is disabled)
 	#doc:It links the material properties with the associated objects as new attributes to be used in reports and quires as fellow:
 	#doc:<ul><li>IfcMaterial</li><ul><li>ext_material_name</li></ul><li>IfcMaterialList</li><ul><li>ext_materiallist_name</li><li>ext_materiallist_count</li></ul><li>IfcMaterialLayer</li><li>IfcMaterialLayerSet</li><li>IfcMaterialLayerSetUsage</li><ul> <li><i>ext_MaterialLayerSetUsage_material_name</i></li><li><i>ext_MaterialLayerSetUsage_layer_count</i></li><li><i>ext_MaterialLayerSetUsage_total_thickness</i></li><li><i>ext_MaterialLayerSetUsage_layerSetName</i></li><li><i>ext_MaterialLayerSetUsage_OffsetFromReferenceLine</i></li></ul></ul>	

@@ -36,17 +36,15 @@ class IFCCIRCLEPROFILEDEF
 		SVG.to_svg(self)
 	end
 	
-	def svg(scale=1)
-		#scale=100 if @radius.to_f < 1
-		res = "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\""
-		res += " width=\"" +  (2.1*scale*@radius.to_f).to_s + "\" height=\"" + (2.1*scale*@radius.to_f).to_s + "\" >"
-		#res += "<g transform=\" scale(" + scale.to_s + "," + scale.to_s + ")\">"
+	def svg(scale=1,transformation="")
+	    style = "  style=\"fill:gray;stroke:black;\" "
+	    style=$svg_style if $svg_style != nil
+        if transformation== ""
+			transformation= " transform=\" scale(" + scale.to_s + "," + scale.to_s + ")\""
+		end	
+		res = "<g " + transformation + " >"
 		res += "<circle cx=\"" +  (scale*@radius.to_f).to_s + "\" cy=\"" + (scale*@radius.to_f).to_s + "\" r=\"" + (scale*@radius.to_f).to_s + "\""
-		res += " style=\"fill:gray;stroke:black;\" /></svg>"
-		res += "<font size=\"1\">"
-		res += "</br>scale=" + scale.to_f.to_s  if scale != 1
-		res += "</br>R=" + @radius.to_f.to_s + "</font>"	
+		res += " " + style + " /></g>"	
 		return res
-	end
-	
+	end	
 end

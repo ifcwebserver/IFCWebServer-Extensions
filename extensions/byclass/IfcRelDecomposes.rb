@@ -1,6 +1,7 @@
 class  IFCRELDECOMPOSES
 	def initialize1(args=[])			
 		attach_to_obj #if $loading_relation == true
+		super
 	end
 	
 	

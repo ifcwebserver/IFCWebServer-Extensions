@@ -20,12 +20,13 @@ class IFCPROPERTYSINGLEVALUE
 		 @description =fix_it(@description) if @description != ""
 		 unit_obj=@unit.to_obj
 		 @unit = unit_obj.prefix.sub("$","").gsub(".","") + "" + unit_obj.name.gsub(".","") if  unit_obj!= nil and unit_obj.respond_to?('prefix')		 
-		"<tr><th>" + fix_it(@name) + "</th><td>" + fix_it(@nominalValue.to_s) + "</td><td>" +  @unit + "</td><td>" + @description + "</td></tr>"
+		"<tr><th>" + fix_it(@name[1..-2].capitalize1) + "</th><td>" + fix_it(@nominalValue.to_s) + "</td></tr>"
+		#<td>" +  @unit + "</td><td>" + @description + "</td>
 	end
 	
 
 	def valid_name(obj=self)
-		attName=fix_it(obj.name).gsub(" ","_").gsub("-","_").gsub(".","_").sub("5dki","_5dki").sub("4D","_4D").gsub("/","_").sub("Laenge","_Laenge")
+		attName=fix_it(obj.name).gsub(" ","_").gsub("-","_").gsub(".","_").gsub("/","_")
 		attName = attName.gsub("__","_")
 		attName = attName.gsub("__","_")
 		attName = attName.gsub("\\","")

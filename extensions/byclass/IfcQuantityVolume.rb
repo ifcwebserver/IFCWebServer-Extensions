@@ -1,6 +1,10 @@
 class IFCQUANTITYVOLUME 
 	def to_row
-		"<tr>\n<th>Volume</th>\n<td>" + @volumeValue.to_s + "</td><td>" + @unit.to_s  + "</td>\n<td>" + @name[1..-2] + "</td><td>" + @description + "</td>\n</tr>"
+		unit=""
+		unit = @unit.to_obj.name if @unit.to_obj != nil and @unit.to_obj.respond_to?("name")
+		"<tr>\n<th>" + @name[1..-2] + " </th>\n<td>" + 
+		@volumeValue.to_s  + "</td><td>" + 
+		unit + "</td>\n</tr>"
 	end
 	
 	def to_xml(obj)

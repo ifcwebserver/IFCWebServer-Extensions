@@ -1,0 +1,3 @@
+class IFCTASK
+
+end

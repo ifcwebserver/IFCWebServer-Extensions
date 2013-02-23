@@ -105,7 +105,7 @@ class IFCEXTRUDEDAREASOLID
 		z.min.to_s + "</zmin><zmax>" + z.max.to_s + "</zmax>"	
 	end
 	
-	def to_dae_geometry(mesh_id = "")		
+	def to_dae_geometry(mesh_id = "")
 		@sweptArea.toIfcObject		
 		obj=$ifcObjects[@sweptArea.delete("#").to_i]		
 		if obj.respond_to?("xyz_array")
@@ -119,9 +119,9 @@ class IFCEXTRUDEDAREASOLID
 		end	
 		if xyz_arr.include?("NilClass.xyz_array")
 		#return ""
-		end		
+		end	
 		xyz_array1=xyz_arr.join(" ").to_s
-		xyz_array1=xyz_arr.join
+		xyz_array1=xyz_arr.join		
 		xyz_array= xyz_array1.gsub("z", "0") + " " + xyz_array1.gsub("z", @depth.to_s)	
 		n=xyz_arr.size/3		
 		nor_arr = "0 0 -1 0 0 1" 
@@ -130,7 +130,7 @@ class IFCEXTRUDEDAREASOLID
 			res ="<geometry id=\"" + self.class.to_s + "_" + self.line_id.to_s + "\">\n<mesh>\n<source id=\"source_pos_" + @line_id.to_s + "\">\n"
 		else
 			res ="<geometry id=\"" + mesh_id + "\">\n<mesh>\n<source id=\"source_pos_" + @line_id.to_s + "\">\n"
-		end
+		end				
 		res=res  + "<float_array id=\"arr_pos_line_id\" count=\"6n\">xyz_array</float_array>".sub("6n",(6*n).to_s).gsub("line_id",@line_id.to_s).sub("xyz_array",xyz_array)
 		res = res  + "<technique_common>\n"
 		res = res  + "<accessor count=\"2n\" source=\"#arr_pos_line_id\" stride=\"3\">\n".sub("2n",(2*n).to_s).sub("line_id",@line_id.to_s)
@@ -165,9 +165,9 @@ class IFCEXTRUDEDAREASOLID
 		normal_index += 1
 		i +=1
 		}
-	res =res + (n-1).to_s + " " + normal_index.to_s + " 0 " + normal_index.to_s +  " " + n.to_s + " " + normal_index.to_s +  " " + (2*n-1).to_s + " " + normal_index.to_s
-	res =res + "</p>\n"
-	res =res + "</polylist>\n</mesh>\n</geometry>"
+	    res =res + (n-1).to_s + " " + normal_index.to_s + " 0 " + normal_index.to_s +  " " + n.to_s + " " + normal_index.to_s +  " " + (2*n-1).to_s + " " + normal_index.to_s
+	    res =res + "</p>\n"
+	     res =res + "</polylist>\n</mesh>\n</geometry>"
 		return res
 	end
 

@@ -1,4 +1,3 @@
-$username = "user1" if $username == nil
 class Server
 	def self.Compare(m1,m2)
 		#doc:<div class='documentaion'>Compare two IFC models m1,m2 and show the reulst as HTML table</div>
@@ -16,7 +15,8 @@ class Server
 	
 	def self.ModelsList
 		#doc:<div class='documentaion'>Return an array of all IFC models owned be the current user on the server</div>
-		Dir.entries($ifc_file_dir_path + "/" + $username ).join(",").gsub(".","").split(",")
+		#Dir.entries( $ifc_file_dir_path + $username ).join(",").split(",")- [".",".."]
+		Dir[$ifc_file_dir_path + $username + "/*.ifc"].entries.join(",").gsub($ifc_file_dir_path + $username + "/","").split(",")- [".",".."]
 	end
 	
 	def self.classes_list(m1)
@@ -30,5 +30,10 @@ class Server
 	
 	def version
 	"1.0"
+	end
+
+	def self.runConverter(path="runconverter")
+	  FakeFS.deactivate! if FakeFS != nil
+      File.new(path,  "w").close      
 	end
 end

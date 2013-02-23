@@ -8,7 +8,7 @@ attr_accessor :x,:y,:z , :dim
     @dim=3
     @dim=2 if @z==nil
 	$points={} if $points == nil
-    $points[@line_id.to_i]= Point.new(self.line_id,@x,@y,@z) 
+    $points[self.line_id.to_i]= Point.new(self.line_id,self.x,self.y,self.z) 
   end
 
   def to_xml( o=self)

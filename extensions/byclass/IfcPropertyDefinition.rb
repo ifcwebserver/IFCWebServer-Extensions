@@ -2,16 +2,15 @@ class IFCPROPERTYDEFINITION
 	def to_details(str="")	
 		return if @name == nil
 		res = ""  		
-		res = res + "<table class='propertyset'>\n"
-		res = res + "<tr><th>Name</th><td colspan=3>" + @name.strip[1..-2] + "</td></tr>" if @name != "$"
-		res = res + "<tr><th>globalId</th><td colspan=3>" + @globalId + "</td></tr>"
-		str.toIfcObject.each { |k,obj|	
-			
+		res = res + "<table  class='propertyset'>"
+		res = res + "<tr><th colspan=2>" + @name.strip[1..-2] + "</td></tr>" if @name != "$"		
+		str.toIfcObject.each { |k,obj|				
 			if ($include_properties.size == 0 or $include_properties.include? fix_it(obj.name)) and not $ignore_properties.include? fix_it(obj.name)
 				res = res +  obj.to_row	if obj.respond_to?("to_row")
 			end		
 		}
-		res = res + "\n</table>"
+		#res = res + "<tr><th>globalId</th><td>" + @globalId[1..-2] + "</td></tr>"
+		res = res + "</table>"
 		return res	
 	end
 	
@@ -25,7 +24,6 @@ class IFCPROPERTYDEFINITION
 		}		
 		return res			
 	end
-	
 	
 	def names_values(str="")
 	return if @name == nil	

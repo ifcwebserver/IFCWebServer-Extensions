@@ -50,8 +50,61 @@ attr_accessor  :x , :y , :z
 			end				
 		end	
 	end
-		
-	def xyz
-		return @x,@y,@z
+ 
+
+  def x_axis
+   if @refDirection.to_obj == nil and @axis.to_obj == nil
+     [1.0,0.0,0.0]     
+   else
+	 @refDirection.to_obj.get_normal
 	end
+  end	
+  
+  def z_axis
+    if @refDirection.to_obj == nil and @axis.to_obj == nil
+	  [0.0,0.0,1.0]
+	else	  
+	  @axis.to_obj.get_normal
+	end
+  end
+  
+  def xyz
+    return @x,@y,@z
+  end
+  
+  def matrix
+    if @refDirection.to_obj == nil and @axis.to_obj == nil
+	  [1,0,0,0,0,1,0,0,0,0,1,0,@x,@y,@z,1]
+	else
+      #Cross Product of Two Vectors	
+	  #u = < a , b , c > and v = < d , e , f >
+      #w(x,y,z) = u x v = < a , b , c > x < d , e , f > = < x , y , z > 
+      #x = b*f - c*e , y = c*d - a*f and z = a*e - b*d
+      x=x_axis	
+	  z=z_axis
+	  y=[]
+	  y[0]=x[1]*z[2]-x[2]*z[1]
+	  y[1]=x[2]*z[0]-x[0]*z[2]
+	  y[2]=x[0]*z[1]-x[1]*z[0]	  
+	  [x[0],x[1],x[2],0,  y[0],y[1],y[2],0,	  z[0],z[1],z[2],0,	  @x,@y,@z,1 ]
+	end
+  end
+  
+  def matrix2d
+    if @refDirection.to_obj == nil and @axis.to_obj == nil
+	  [1,0,0,1,@x,@y]
+	else
+      #Cross Product of Two Vectors	
+	  #u = < a , b , c > and v = < d , e , f >
+      #w(x,y,z) = u x v = < a , b , c > x < d , e , f > = < x , y , z > 
+      #x = b*f - c*e , y = c*d - a*f and z = a*e - b*d
+      x=x_axis	
+	  z=z_axis
+	  y=[]
+	  y[0]=x[1]*z[2]-x[2]*z[1]
+	  y[1]=x[2]*z[0]-x[0]*z[2]
+	  y[2]=x[0]*z[1]-x[1]*z[0]	  
+	  [x[0],x[1],y[0],y[1],@x,@y]
+	end
+  end
 end

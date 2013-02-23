@@ -1,7 +1,10 @@
 class IFCRELDEFINESBYTYPE
-	def initialize1(args=[])			
-		attach_to_obj
-	end
+  def initialize1(args=[])			
+    attach_to_obj
+	$depend_on={} if $depend_on == nil
+    $depend_on[@relatedObjects.to_s] ="" if $depend_on[@relatedObjects.to_s]== nil
+    $depend_on[@relatedObjects.to_s] += "#" + @line_id.to_s
+  end
 	
 	def attach_to_obj
 		@relatedObjects.to_s.toIfcObject.each {|k,v|		

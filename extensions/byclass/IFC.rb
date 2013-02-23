@@ -47,4 +47,3 @@ def IFC_CLASS_NAME.where (cond,output)
 end
 end
 eos
-

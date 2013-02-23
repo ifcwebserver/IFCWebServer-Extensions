@@ -6,7 +6,7 @@
 
 class IFCISHAPEPROFILEDEF
 	def area
-	return 	2*@flangeThickness.to_f*@overallWidth.to_f + @webThickness.to_f*(@overallDepth.to_f-2*@flangeThickness.to_f)
+	 	2*@flangeThickness.to_f*@overallWidth.to_f + @webThickness.to_f*(@overallDepth.to_f-2*@flangeThickness.to_f)
 	end
 	
 	def perimeter
@@ -23,12 +23,13 @@ class IFCISHAPEPROFILEDEF
 		SVG.to_svg(self)
 	end
 	
-	def svg(scale=1)
-	res = "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\""
-	res += " width=\"" + (scale*@overallWidth.to_f).to_s + "\" "
-	res += " height=\"" +  (scale*@overallDepth.to_f).to_s + "\" "
-	res +=" >"
-	res += "<g transform=\" scale(" + scale.to_s + "," + scale.to_s + ")\">"
+	def svg(scale=1,transformation="")
+	style = " style=\"fill:gray;stroke:blue;stroke-width:1\" "
+	style=$svg_style if $svg_style != nil
+	if	transformation== ""
+	  transformation= " transform=\" scale(" + scale.to_s + "," + scale.to_s + ")\""
+	end
+	res = "<g " + transformation+ " >"
 	res += "<polyline points=\"" 
 	res += "0,0 " + @overallWidth.to_f.to_s + ",0 " + @overallWidth.to_f.to_s + "," + @flangeThickness.to_f.to_s + " "
 	res += (0.5 *(@webThickness.to_f + @overallWidth.to_f)).to_s + "," + @flangeThickness.to_f.to_s + " "
@@ -40,7 +41,7 @@ class IFCISHAPEPROFILEDEF
 	res += (0.5*@overallWidth.to_f - 0.5*@webThickness.to_f).to_s + "," + (@overallDepth.to_f - @flangeThickness.to_f).to_s + " "
 	res += (0.5*@overallWidth.to_f - 0.5*@webThickness.to_f).to_s + "," + @flangeThickness.to_f.to_s + " "
 	res += "0," + @flangeThickness.to_f.to_s + " 0,0"
-	res += "\" style=\"fill:gray;stroke:blue;stroke-width:1\" /></g></svg>"
+	res += "\" " + style + " /></g>"
 	return res
 	end
 end

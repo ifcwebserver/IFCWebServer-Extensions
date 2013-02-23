@@ -1,7 +1,7 @@
 class IFCWINDOWSTYLE
 	def  property_details
 		res = ""  		
-		res = res + "<table width='98%' class='propertyset'>\n"
+		res = res + "<table class='propertyset'>\n"
 		res += "<tr><th>Name</th><td>" + fix_it(@name) + "</td></tr>"								if @name != "$"
 		res += "<tr><th>globalId</th><td>" + @globalId + "</td></tr>" 				
 		res += "<tr><td>ConstructionType</td><td>" + @constructionType + "</td></tr>"				if @constructionType !=nil and @constructionType != "$"		
