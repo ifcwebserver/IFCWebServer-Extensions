@@ -40,11 +40,6 @@ class IFCPOLYLOOP
 	
 	def to_svg
 		@polygon.to_s.toIfcObject
-		$svgFile= File.new("svg/" +  $username + "/" + @line_id.to_s + ".svg",  "w")
-		res= ""
-		res=res + "<?xml version='1.0' encoding='UTF-8'?>\n<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>\n"
-		res=res + "<html xmlns='http://www.w3.org/1999/xhtml'  xmlns:svg='http://www.w3.org/2000/svg'   xmlns:xlink='http://www.w3.org/1999/xlink'>\n"
-		res=res + "<head>\n<title></title>\n</head>\n<body>\n"
 		x=[]
 		y=[]
 		z=[]	
@@ -65,8 +60,7 @@ class IFCPOLYLOOP
 		dx=-1*x_min if x_min < 0
 		dy=-1*y_min if y_min < 0
 		dz=-1*z_min if z_min < 0
-		res_svg=""
-		res_svg=res_svg + "<svg version='1.1' xmlns='http://www.w3.org/2000/svg' width='100%' height='100%' preserveAspectRatio='xMinYMin meet' >\n"
+		res_svg= "<svg version='1.1' xmlns='http://www.w3.org/2000/svg' width='100%' height='100%' preserveAspectRatio='xMinYMin meet' >"
 		#res_svg += "<g transform=\" scale(1) translate(" + (-x_min).to_s + " " + (-y_min).to_s + ") \">"
 		res_svg=res_svg + "<polygon points='"
 		x.size.times { |i|
@@ -77,19 +71,12 @@ class IFCPOLYLOOP
 			elsif x_min== x_max
 				res_svg = res_svg + (y[i]+dy).to_s + "," + (z[i]+dz).to_s + " "		
 			else
-			res=res + "<p>3D Polyloop</p></body>\n</html>" 
-			$svgFile.puts res
 			return ""
 			end
 		}	
-		res_svg= res_svg + "' style='stroke:red;stroke-width:0.01;fill:lightgray' />"
+		res_svg= res_svg + "' style='stroke:red;stroke-width:0.1;fill:lightgray' />"
 		#res_svg +="</g>"
-		res_svg += "\n</svg>"
-
-		res=res + res_svg 
-		res=res +"\n</body>\n</html>"
-		$svgFile.puts res_svg
-		return @line_id.to_s + ".svg"
+		res_svg += "\n</svg>XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
 	end	
 		
 	def to_xy_xml
@@ -106,19 +93,20 @@ class IFCPOLYLOOP
 		}	
 	end
 	
-	def perimeter1
-		@polygon.to_s.toIfcObject
-		perimeter=0	
-		polygon_list = @polygon.to_s.gsub(",","").sub("(","").sub(")","").split("#")		
-		(polygon_list.length-1).times do |i|	
-			p=$points[polygon_list[i].to_i]
-			p1=$points[polygon_list[i+1].to_i]
-			p.z != nil ? perimeter = perimeter + Math.sqrt((p.x - p1.x)**2 +(p.y - p1.y)**2 + (p.z - p1.z)**2) :  perimeter = perimeter + Math.sqrt((p.x - p1.x)**2 +(p.y - p1.y)**2)   
+	def perimeter
+	  x=[]
+	  y=[]
+	  z=[]	
+	  res=0
+	  @polygon.toIfcObject.each { |k,p|
+			x << p.x.to_f
+			y << p.y.to_f
+			z << p.z.to_f		 
+		}			
+		(x.length-1).times do |i|	
+			res += Math.sqrt((x[i] - x[i+1])**2 +(y[i] - y[i+1])**2 + (z[i] - z[i+1])**2)  
 		end	
-		p=$points[polygon_list[polygon_list.length-1].to_i]
-		p1=$points[polygon_list[0].to_i]
-		p.z != nil ? perimeter = perimeter + Math.sqrt((p.x - p1.x)**2 +(p.y - p1.y)**2 + (p.z - p1.z)**2) :  perimeter = perimeter + Math.sqrt((p.x - p1.x)**2 +(p.y - p1.y)**2)   
-		return perimeter
+		res.round_to(5)
 	end
 	
 	def to_mesh
@@ -214,7 +202,7 @@ class IFCPOLYLOOP
 		pnts << p if p != ""
 		}
 		j=0
-		(pnts.size-1).times do |i|
+		(pnts.size).times do |i|
 			j = j +1
 			j= 0 if j== pnts.size
 			p=$points[pnts[j].to_i]
@@ -223,6 +211,52 @@ class IFCPOLYLOOP
 			area += (p1.y + p.y)*(p1.z - p.z) if p1.x ==  p.x
 			area += (p1.x + p.x)*(p1.z - p.z) if p1.y ==  p.y			
 		end
-		return ((area * 0.5).abs*$ifcUnit["Length"]*$ifcUnit["Length"])
+		(area * 0.5).abs.round_to(5)
+	end
+	
+	def dx_dy_dz
+		x=[]
+		y=[]
+		z=[]	
+		@polygon.toIfcObject.each { |k,p|
+			x << p.x.to_f
+			y << p.y.to_f
+			z << p.z.to_f		 
+		}	
+		[(x.max-x.min).round_to(5),(y.max-y.min).round_to(5),(z.max-z.min).round_to(5)]
+	end
+	
+	def xyz_min
+		x=[]
+		y=[]
+		z=[]	
+		@polygon.toIfcObject.each { |k,p|
+			x << p.x.to_f
+			y << p.y.to_f
+			z << p.z.to_f		 
+		}	
+		[x.min.round_to(5),y.min.round_to(5),z.min.round_to(5)]
+	end
+
+	def xyz_max
+		x=[]
+		y=[]
+		z=[]	
+		@polygon.toIfcObject.each { |k,p|
+			x << p.x.to_f
+			y << p.y.to_f
+			z << p.z.to_f		 
+		}	
+		[x.max.round_to(5),y.max.round_to(5),z.max.round_to(5)]
+	end
+	
+	def is_circle?(precision=0.01)
+	  dx,dy,dz=dx_dy_dz
+	  area/(Math::PI*(dx*dx)/4) > (1-precision) and area/(Math::PI*(dx*dx)/4) < (1+precision)
+	end
+	
+	def inXY?
+	dx,dy,dz=dx_dy_dz
+	dz== 0
 	end
 end

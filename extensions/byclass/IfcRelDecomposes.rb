@@ -10,6 +10,7 @@ class  IFCRELDECOMPOSES
 		relatingObject_Obj = @relatingObject.to_s.to_obj	
 		isDecomposedBy= {}
 		isDecomposedBy['globalId'] =relatingObject_Obj.globalId
+		isDecomposedBy['line_id'] = "#" + relatingObject_Obj.line_id.to_s
 		isDecomposedBy['name'] =relatingObject_Obj.name
 		isDecomposedBy['class'] =relatingObject_Obj.class.to_s		
 		v.instance_variable_set("@isDecomposedBy" , isDecomposedBy )	if relatingObject_Obj != nil

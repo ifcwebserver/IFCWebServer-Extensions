@@ -11,7 +11,7 @@ class IFCEXTRUDEDAREASOLID
 	
 	def perimeter
 		@sweptArea.toIfcObject
-		o=$ifcObjects[@sweptArea.delete("#").to_i]
+		o=@sweptArea.to_obj
 		if o.respond_to?('perimeter')
 			o.perimeter.to_f
 		else
@@ -27,8 +27,7 @@ class IFCEXTRUDEDAREASOLID
 		else
 			$log["<br>" + __FILE__.to_s + " Line:" + __LINE__.to_s ]= "  " +  o.class.to_s + ".diameter() is not yet supported"
 		end		
-	end
-	
+	end	
 	
 	def area_side
 		@sweptArea.toIfcObject

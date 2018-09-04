@@ -7,7 +7,7 @@ class IFCMATERIALLAYERSETUSAGE
 		forLayerSetObj=@forLayerSet.to_s.to_obj		
 		forLayerSetObj.materialLayers.to_s.toIfcObject.each { |k,v|		
 		totalThickness += v.layerThickness.to_f
-		res +=  "|" + fix_it(v.material.to_s.to_obj.name) + "|" + v.layerThickness + "|</br>" if v.material.to_s.to_obj != nil
+		res +=  "|" + v.material.to_s.to_obj.name + "|" + v.layerThickness + "|</br>" if v.material.to_s.to_obj != nil
 		layer_count += 1	
 		}		
 		layerSetName = forLayerSetObj.layerSetName				

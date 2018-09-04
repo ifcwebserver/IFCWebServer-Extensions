@@ -15,6 +15,10 @@ class IFCELEMENTQUANTITY
 		return res	
 	end
 	
+	def property_names_values_hash		
+		names_values_hash(@quantities.to_s)			
+	end	
+	
 	def property_details		
 		to_details(@quantities)		
 	end
@@ -32,4 +36,31 @@ class IFCELEMENTQUANTITY
 		v.attach_to_obj(obj) if v.respond_to?("attach_to_obj")
 		}
 	end
+	
+	def names_values_hash(str="")	
+		res={}
+		str.toIfcObject.each { |k,obj|	
+		next if obj.class == IFCCOMPLEXPROPERTY
+		att_name= nil
+		att_value = nil	
+		att_name=   encode_string(obj.name.to_s )		
+		if obj.class == IFCQUANTITYLENGTH
+			att_value = obj.lengthValue.to_s			
+		elsif 	obj.class == IFCQUANTITYAREA 
+			att_value = obj.areaValue.to_s
+		elsif 	obj.class == IFCQUANTITYVOLUME 
+			att_value = obj.volumeValue.to_s
+		elsif 	obj.class == IFCQUANTITYCOUNT
+			att_value = obj.countValue.to_s		
+		elsif 	obj.class == IFCQUANTITYWEIGHT
+			att_value = obj.weightValue.to_s		
+		elsif 	obj.class == IFCQUANTITYTIME
+			att_value = obj.timeValue.to_s
+		end
+		att_value += "|" + obj.unit if obj.unit != '$'
+		res[att_name]=att_value if att_name and att_value
+		}		
+		return res		
+	end
+	
 end

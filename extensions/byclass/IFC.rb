@@ -1,11 +1,11 @@
 xx = <<-eos
 class API
-def getObjectByLineID(line_id)
-#doc:<div class='documentaion' >Return an IFC object by its StepLineNumber </div>
+def getObjectByLineID(id)
+#doc:<div class='documentaion' >Return an IFC object by its STEP ID </div>
 end
 
 def IFC_CLASS_NAME.nonInverseAttributes
-#doc:<div class='documentaion' >Return a list of IFC class direct attributes<br>
+#doc:<div class='documentaion' >Return a list of IFC class basic attributes<br>
 #doc:<b> IFCCOLUMN.nonInverseAttributes</b>: -->>><br>"|globalId |ownerHistory |name |description |objectType |objectPlacement |representation |tag"</div>
 end
 

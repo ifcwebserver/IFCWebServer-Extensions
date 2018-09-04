@@ -7,7 +7,5 @@ class IFCRELAGGREGATES
 	super
   end	
   
-  def attach_to_obj
-    super		
-  end	
+	
 end

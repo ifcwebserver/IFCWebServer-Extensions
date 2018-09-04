@@ -64,14 +64,19 @@ attr_accessor :x_min, :x_max ,:y_min , :y_max
 		return  "#@x_min,#@y_min,#@x_max,#@y_max"
 	end
 	
-	def to_xml(obj=self)
-	xml=""
-	@points.to_s.toIfcObject.each { |k,o| xml= xml + "\n" + o.to_xml }
-	"\n<IFCPOLYLINE LINEID='"  + @line_id.to_s + "'>" + xml  + "\n</IFCPOLYLINE>"
+	def to_xml1(obj=self)
+	  xml=""
+	   @points.to_s.toIfcObject.each { |k,o| xml= xml + "\n" + o.to_xml }
+	     "\n<IFCPOLYLINE LINEID='"  + @line_id.to_s + "'>" + xml  + "\n</IFCPOLYLINE>"
 	end
+
+	def to_xml(obj=self)
+	  "\n<IfcPolyLine StepID='#"  + @line_id.to_s + "'>" + xy_array.join + "\n</IfcPolyLine>"
+	end
+
 	
-	def to_svg
-		SVG.to_svg(self)
+	def to_svg(scale=1)
+		SVG.to_svg(self,scale)
 	end
 	
 	def svg(scale=1,transformation="")
@@ -97,9 +102,9 @@ attr_accessor :x_min, :x_max ,:y_min , :y_max
 		end	
 		x_min=x.min;x_max=x.max;y_min=y.min;y_max=y.max;z_min=z.min;z_max=z.max		
 		if	transformation== ""
-			transformation= " transform='translate(" + (-1.05*x_min*scale).to_s  + "," +  (-1.05*y_min*scale).to_s + ") scale(" + scale.to_s + ")'"
+			transformation= " transform='translate(" + (-1*x_min).to_s  + "," +  (1*y_min+30).to_s + ") scale(" + scale.to_s + ")'"
 		end
-		res += "<g " + transformation + " >"
+		res += "\n<g " + transformation + " >\n\t"
 		if pnt.length == 3
 			res +=   "<path  d=\"m " + x[0].round_to(2).to_s + "," + y[0].round_to(2).to_s + "," 
 			res +=  x[1].round_to(2).to_s + "," + y[1].round_to(2).to_s + "\" id=\"" + @line_id.to_s + "\"/>\n</g>"
@@ -117,13 +122,12 @@ attr_accessor :x_min, :x_max ,:y_min , :y_max
 				end
 			end	
 			if counter == 1
-				res += "' " + style + " />\n</g>"
+				res += "' " + style + " />\n</g>\n"
 			else
-				res += "' " + style1 + " />\n</g>"
+				res += "' " + style1 + " />\n</g>\n"
 			end
 		end
-		}	
-		
+		}		
 		res
 	end
 	
@@ -276,6 +280,12 @@ attr_accessor :x_min, :x_max ,:y_min , :y_max
 		dae_node=dae_node + "</instance_geometry>"
 		dae_node=dae_node + "</node>"				
 		return dae_node
+	end
+	
+	def add_point(id)
+      @points="(" if @points == nil
+	  @points = @points.sub(")","") + "," + id + ")"
+      @points.sub!("(,","(")
 	end
 	
 	def self.new_from_points_array(xy_array=[])	

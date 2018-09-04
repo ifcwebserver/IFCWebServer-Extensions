@@ -22,6 +22,18 @@ attr_accessor :size , :enumerationValuesList
 	end
 	
 	def size
-	@enumerationValues.split(',').size
+	  @enumerationValues.split(',').size
+	end
+	
+	def as_table
+	 HTML.tableHeader @name.gsub("'","")
+	 @enumerationValues.gsub("'","").split(",").each {|item|
+	 puts "<tr><td>" + item + "</td></tr>"
+	 }
+     puts "</table>"	 
+	end
+	
+	def as_select_box
+	  HTML.select_box_html(@name.gsub("'",""),@enumerationValues.gsub("'","").split(","),[],false)
 	end
 end

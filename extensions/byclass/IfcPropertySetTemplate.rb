@@ -18,6 +18,14 @@ class IFCPROPERTYSETTEMPLATE
 		row += "</td></tr>"
 		res << row
 		}
-		"<form action=''><table><tr><th colspan='2' align='left'>" + "<a href='#' title='" + @description.gsub("'","_") + "'>" + @name.sub("Qto_","").sub("Pset_","") + "</a></th></tr>" + res.sort.join + "<tr><td></td><td><input type='submit' value='Update' ></td></tr></table></form>"
+		"<form action=''><table><tr><th colspan='2' align='left'>" + "<a href='#' title='" + @description.gsub("'","_") + "'>" + @name.gsub("'","").sub("Qto_","").sub("Pset_","") + "</a></th></tr>" + res.sort.join + "<tr><td></td><td><input type='submit' value='Update' ></td></tr></table></form>"
+	 end
+	 
+	 def propertyTemplates
+	   res= []
+	   hasPropertyTemplates.toIfcObject.each { |k,o|
+	    res << o.name
+	   }
+	   res
 	 end
 end

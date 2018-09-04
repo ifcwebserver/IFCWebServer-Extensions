@@ -14,11 +14,10 @@ class IFCMATERIALLIST
 		res = "|"
 		count = 0
 		@materials.to_s.toIfcObject.each { |k,v|
-		res += fix_it(v.name) + "|"
+		res += v.name + "|"
 		count += 1
 		}
 		obj.instance_variable_set("@ext_materiallist_name", res )		
 		obj.instance_variable_set("@ext_materiallist_count", count)				
 	end
 end
-

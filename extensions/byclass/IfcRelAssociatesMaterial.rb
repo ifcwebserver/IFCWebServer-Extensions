@@ -2,8 +2,9 @@ class IFCRELASSOCIATESMATERIAL
   def initialize1(args=[])			
 	attach_to_obj
 	$depend_on={} if $depend_on == nil
-    $depend_on[@relatedObjects.to_s] ="" if $depend_on[@relatedObjects.to_s]== nil
-    $depend_on[@relatedObjects.to_s] += "#" + @line_id.to_s
+    $depend_on[@relatedObjects.to_s.gsub("(","").gsub(")","")] ="" if $depend_on[@relatedObjects.to_s.gsub("(","").gsub(")","")]== nil
+    $depend_on[@relatedObjects.to_s.gsub("(","").gsub(")","")] += "#" + @line_id.to_s
+	super
   end
   
   def attach_to_obj

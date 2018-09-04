@@ -1,15 +1,15 @@
 class IFCDOORPANELPROPERTIES
 	def  property_details
 		res = ""  		
-		res = res + "<table width='98%' class='propertyset'>\n"
+		res = res + "<table class='propertyset'>"
 		res += "<tr><th>Name</th><td>" + @name + "</td></tr>"							if @name != "$"
 		res += "<tr><th>globalId</th><td>" + @globalId + "</td></tr>" 				
-		res += "<tr><td>PanelDepth</td><td>" + @panelDepth + "</td></tr>" 				if @panelDepth != "$"
-		res += "<tr><td>PanelOperation</td><td>" + @panelOperation + "</td></tr>"		if @panelOperation != "$"
-		res += "<tr><td>PanelPosition</td><td>" + @panelPosition + "</td></tr>"			if @panelPosition != "$"
-		res += "<tr><td>PanelWidth</td><td>" + @panelWidth + "</td></tr>" 				if @panelWidth != "$"
-		res += "<tr><td>ShapeAspectStyle</td><td>" + @shapeAspectStyle + "</td></tr>"	if @shapeAspectStyle != "$"		
-		res = res + "\n</table>"
+		res += "<tr><th>PanelDepth</th><td>" + @panelDepth + "</td></tr>" 				if @panelDepth != "$"
+		res += "<tr><th>PanelOperation</th><td>" + @panelOperation + "</td></tr>"		if @panelOperation != "$"
+		res += "<tr><th>PanelPosition</th><td>" + @panelPosition + "</td></tr>"			if @panelPosition != "$"
+		res += "<tr><th>PanelWidth</th><td>" + @panelWidth + "</td></tr>" 				if @panelWidth != "$"
+		res += "<tr><th>ShapeAspectStyle</th><td>" + @shapeAspectStyle + "</td></tr>"	if @shapeAspectStyle != "$"		
+		res = res + "</table>"
 		return res
 	end
 	

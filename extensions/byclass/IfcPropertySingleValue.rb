@@ -10,23 +10,29 @@ class IFCPROPERTYSINGLEVALUE
 		#	@unit= new_args[3]
 		#ex: #100057 = IFCPROPERTYSINGLEVALUE('NominalLength', 'Nominal, typically the ..dimension.', IFCLENGTHMEASURE(300.), #100056);
 		#
+		
+
 		end
+		
+		class_name = args[2].to_s.scan(/\IFC[A-Z0-9]*/)[0]
+		args[2]  = args[2].sub(class_name,"").sub(")","").sub("(","") if class_name != nil
+		super
 	end
 	
 		
 	def to_row		 		 
 		 @unit.sub!("$","")
 		 @description.sub!("$","")
-		 @description =fix_it(@description) if @description != ""
+		 @description =encode_string(@description) if @description != ""
 		 unit_obj=@unit.to_obj
 		 @unit = unit_obj.prefix.sub("$","").gsub(".","") + "" + unit_obj.name.gsub(".","") if  unit_obj!= nil and unit_obj.respond_to?('prefix')		 
-		"<tr><th>" + fix_it(@name[1..-2].capitalize1) + "</th><td>" + fix_it(@nominalValue.to_s) + "</td></tr>"
+		"<tr><th width='50%'>" +  encode_string(@name.strip[1..-2]) + "</th><td width='50%'>" +  encode_string(@nominalValue.to_s) + "</td></tr>"
 		#<td>" +  @unit + "</td><td>" + @description + "</td>
 	end
 	
 
 	def valid_name(obj=self)
-		attName=fix_it(obj.name).gsub(" ","_").gsub("-","_").gsub(".","_").gsub("/","_")
+		attName=encode_string(obj.name).gsub(" ","_").gsub("-","_").gsub(".","_").gsub("/","_")
 		attName = attName.gsub("__","_")
 		attName = attName.gsub("__","_")
 		attName = attName.gsub("\\","")
@@ -41,7 +47,7 @@ class IFCPROPERTYSINGLEVALUE
 	end
 	
 	def valid_value(obj=self)
-		fix_it(obj.nominalValue.to_s)
+		encode_string(obj.nominalValue.to_s)
 	end
 
 	
@@ -56,12 +62,12 @@ class IFCPROPERTYSINGLEVALUE
 		"</name>\n\t<value>" + obj.nominalValue.to_s + "</value>\n</IFCPROPERTYSINGLEVALUE>"
 	end			
 	
+
+	#def to_csv(obj=self)
+	#	obj.line_id.to_s + "\t" + obj.name + "\t" + obj.nominalValue.to_s + "\n"
+	#end
 	
-	def to_csv(obj=self)
-		obj.line_id.to_s + "\t" + obj.name + "\t" + obj.nominalValue.to_s + "\n"
-	end
-	
-	def attach_to_obj(obj)	
-		obj.instance_variable_set("@ext_" + fix_it(@name[1..-2]).uncapitalize.gsub(" ","_").gsub(".","_").gsub("-","_"), fix_it(@nominalValue)  )
+	def attach_to_obj(obj)
+		obj.instance_variable_set("@ext_" + encode_string(@name[1..-2]).uncapitalize.gsub(" ","_").gsub(".","_").gsub("-","_").gsub("/","_"), encode_string(@nominalValue)  )
 	end
 end

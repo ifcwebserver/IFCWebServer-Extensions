@@ -35,9 +35,6 @@ class IFCOBJECTDEFINITION
 		$hasAssignments[@line_id.to_s].join.toIfcObject.values
 	end
 	
-	def nests	 
-	#SET [0:1] OF IfcRelNests FOR RelatedObjects;
-	end
 	
 	def isNestedBy	 #
 	#SET OF IfcRelNests FOR RelatingObject;
@@ -69,14 +66,7 @@ class IFCOBJECTDEFINITION
 		res
 	end
 	
-	def isDecomposedBy	 
-		#SET OF IfcRelAggregates FOR RelatingObject;	
-		res=[]
-		IFCRELAGGREGATES.where("(o.relatedObjects + ',').gsub(' ','').sub(')',',').include?'#" + @line_id.to_s + ",'","o.relatingObject").to_a.join.toIfcObject.each { |k,v|
-		res << v
-		}
-		res
-	end
+
 	
 	def decomposes	 
 	#SET [0:1] OF IfcRelAggregates FOR RelatedObjects;	

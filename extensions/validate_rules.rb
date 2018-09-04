@@ -1,9 +1,12 @@
+## Low level rules validations
+## The rules will be loaded if the global variable $rules_validation is set to be true
 require 'date'
+$div="<div style='background-color:rgb(255, 230, 230);padding: 16px ;width:75%' >"
 class IFCACTORROLE
 	def validate_rules
 		#WR1 : (Role <> IfcRoleEnum.USERDEFINED) OR ((Role = IfcRoleEnum.USERDEFINED) AND  EXISTS(SELF.UserDefinedRole));
 		if (@role != ".USERDEFINED." or (@role == ".USERDEFINED." and (@userDefinedRole != '$' and @userDefinedRole != '' ))) == false then
-			puts "<div style='background-color:rgb(255, 230, 230);padding: 16px ;width:50%' >"
+			puts $div
 			puts self.class.to_s + "<br>"
 			puts "The Rule:<br>WR1 : (Role <> IfcRoleEnum.USERDEFINED) OR ((Role = IfcRoleEnum.USERDEFINED) AND  EXISTS(SELF.UserDefinedRole));"
 			puts "is broken\n"
@@ -22,7 +25,7 @@ class IFCADDRESS
 		if (@purpose!= "$" and @purpose!= "''") or (
 			@purpose != ".USERDEFINED." or 
 			(( @purpose == ".USERDEFINED." and (@userDefinedPurpose != "$" or @userDefinedPurpose != "''"))))
-			puts "<div style='background-color:rgb(255, 230, 230);padding: 16px ;width:50%' >"
+			puts $div
 			puts self.class.to_s + "<br>"
 			puts "The Rule:<br>
 			 WR1 : (NOT(EXISTS(Purpose))) OR
@@ -53,7 +56,7 @@ class IFCPOSTALADDRESS
 			or  @region != "$" or @region != "''" 
 			or  @country != "$" or @country != "''" )		
 		else
-		puts "<div style='background-color:rgb(255, 230, 230);padding: 16px ;width:50%' >"
+		puts $div
 		puts self.class.to_s + "<br>"
 		puts "The Rule:<br>
 		WR1 : EXISTS (InternalLocation) OR 
@@ -83,7 +86,7 @@ class IFCTELECOMADDRESS
 			or  @electronicMailAddresses != "$" or @electronicMailAddresses != "''" 
 			or  @wWWHomePageURL != "$" or @wWWHomePageURL != "''" )
 		else
-		puts "<div style='background-color:rgb(255, 230, 230);padding: 16px ;width:50%' >"
+		puts $div
 		puts self.class.to_s + "<br>"
 		puts "The Rule:<br>
 		WR1 : EXISTS (TelephoneNumbers) OR
@@ -105,7 +108,7 @@ class IFCAPPLIEDVALUE
 		if (@appliedValue != "$" or @appliedValue != "''" 
 			or  @valueOfComponents != "$" or @valueOfComponents != "''" )
 		else
-		puts "<div style='background-color:rgb(255, 230, 230);padding: 16px ;width:50%' >"
+		puts $div
 		puts self.class.to_s + "<br>"
 		puts "The Rule:<br>
 		WR1 : EXISTS (AppliedValue) OR 
@@ -123,7 +126,7 @@ class IFCENVIRONMENTALIMPACTVALUE
 	def validate_rules
 		if ( )
 		else
-		puts "<div style='background-color:rgb(255, 230, 230);padding: 16px ;width:50%' >"
+		puts $div
 		puts self.class.to_s + "<br>"
 		puts "The Rule:<br>
 		<br>
@@ -149,7 +152,7 @@ class IFCRELNESTS
 		#NoSelfReference WR1 : SIZEOF(QUERY(Temp <* SELF\IfcRelDecomposes.RelatedObjects | NOT(TYPEOF(SELF\IfcRelDecomposes.RelatingObject) = TYPEOF(Temp)))) = 0;
 		if @relatedObjects.to_s.include?(@relatingObject.to_s) and @relatedObjects != nil			
 			puts 
-			puts "<div style='background-color:rgb(255, 230, 230);padding: 16px ;width:50%' >"
+			puts $div
 			puts self.class.to_s + "<br>"
 			puts "The Rule:<b>NoSelfReference</b><br> WR1 : SIZEOF(QUERY(Temp <* SELF\IfcRelDecomposes.RelatedObjects | NOT(TYPEOF(SELF\IfcRelDecomposes.RelatingObject) = TYPEOF(Temp)))) = 0;"
 			puts "</br>is broken</br>"
@@ -164,7 +167,7 @@ class IFCPERSON
 	def validate_rules
 		#	WR1 : EXISTS(FamilyName) OR   EXISTS(GivenName);		
 		if (@familyName== "$" or @familyName== "''")  and (@givenName== "$" or @givenName== "''")
-			puts "<div style='background-color:rgb(255, 230, 230);padding: 16px ;width:50%' >"
+			puts $div
 			puts self.class.to_s + "<br>"
 			puts "The Rule:<br>WR1 : EXISTS(FamilyName) OR   EXISTS(GivenName);"
 			puts "is broken</br>"
@@ -181,12 +184,11 @@ class IFCZONE
 		#IFC2x4
 		#WR1 : 	(SIZEOF(SELF\IfcGroup.IsGroupedBy) = 0) OR (SIZEOF (QUERY (temp <* SELF\IfcGroup.IsGroupedBy[1].RelatedObjects | NOT(('IFC2X4_ALPHA.IFCZONE' IN TYPEOF(temp)) OR ('IFC2X4_ALPHA.IFCSPACE' IN TYPEOF(temp)) OR ('IFC2X4_ALPHA.IFCSPATIALZONE' IN TYPEOF(temp)) ))) = 0);
 		# A Zone is grouped by the objectified relationship IfcRelAssignsToGroup. Only objects of type IfcSpace or IfcZone are allowed as RelatedObjects.
-		
 		if @isGroupedBy != nil 
 			isGroupedByObj=$ifcObjects[@isGroupedBy].relatedObjects.split("#").each { |relObj_ID|
 			if $ifcObjects[relObj_ID].class.to_s == "IFCSPACE" or $ifcObjects[relObj_ID].class.to_s == "IFCZONE" then
 			else
-				puts "<div style='background-color:rgb(255, 230, 230);padding: 16px ;width:50%' >"
+				puts $div
 				puts self.class.to_s + "<br>"
 				puts "The Rule:<br>WR1 : A Zone is grouped by the objectified relationship IfcRelAssignsToGroup. Only objects of type IfcSpace or IfcZone are allowed as RelatedObjects."
 				puts "</br>is broken</br>"

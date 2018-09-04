@@ -33,25 +33,25 @@ attr_accessor :x,:y,:z , :dim
     xyz[2]? @z= xyz[2].to_f.round_to(3) :@z=nil
   end
   
-  def min_max
+ def min_max
   #doc:<div class='documentaion' >return a list of Xmin,Xmax,Ymin,Ymax,Zmin,Zmax of all IfcCartesianPoint instances</div>
-    x_min=0
-    x_max=0
-    y_min=0
-    y_max=0
-    z_min=0
-    z_max=0
-    ObjectSpace.each_object(IFCCARTESIANPOINT) { |o|
-    x_min = o.x if o.x < x_min
-    x_max = o.x if o.x > x_max  
-    y_min = o.y if o.y < y_min
-    y_max = o.y if o.y > y_max  
-    z_min = o.z if o.z != nil and o.z < z_min
-    z_max = o.z if o.z != nil and  o.z > z_max  
-    }
-    #puts "<Xmin>" + x_min.to_s + "</Xmin><Xmax>" + x_max.to_s + "</Xmax>"
-    #puts "<Ymin>" + y_min.to_s + "</Ymin><Ymax>" + y_max.to_s + "</Ymax>"
-    #puts "<Zmin>" + z_min.to_s + "</Zmin><Zmax>" + z_max.to_s + "</Zmax>"  
-    x_min.to_s + "," + x_max.to_s + "," + y_min.to_s + "," + y_max.to_s + "," + z_min.to_s + "," + z_max.to_s 
+  x_min=0
+  x_max=0
+  y_min=0
+  y_max=0
+  z_min=0
+  z_max=0
+  ObjectSpace.each_object(IFCCARTESIANPOINT) { |o|
+  x_min = o.x if o.x < x_min
+  x_max = o.x if o.x > x_max  
+  y_min = o.y if o.y < y_min
+  y_max = o.y if o.y > y_max  
+  z_min = o.z if o.z != nil and o.z < z_min
+  z_max = o.z if o.z != nil and  o.z > z_max  
+  }
+  #puts "<Xmin>" + x_min.to_s + "</Xmin><Xmax>" + x_max.to_s + "</Xmax>"
+  #puts "<Ymin>" + y_min.to_s + "</Ymin><Ymax>" + y_max.to_s + "</Ymax>"
+  #puts "<Zmin>" + z_min.to_s + "</Zmin><Zmax>" + z_max.to_s + "</Zmax>"  
+  x_min.to_s + "," + x_max.to_s + "," + y_min.to_s + "," + y_max.to_s + "," + z_min.to_s + "," + z_max.to_s 
   end  
 end

@@ -14,9 +14,6 @@ class IFCCOLOURRGB
 	end
 	
 	def to_html_div
-		"<div style=\"background-color:" + to_RGB_HEX + "\">&nbsp;</div>"
-	end
-	
-	def to_collada_material
+		"<div class='color_rgb' style=\"background-color:" + to_RGB_HEX + "\">&nbsp;</div>"
 	end
 end

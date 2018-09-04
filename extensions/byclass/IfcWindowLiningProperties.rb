@@ -1,7 +1,7 @@
 class IFCWINDOWLININGPROPERTIES
 	def  property_details
 		res = ""  		
-		res = res + "<table width='98%' class='propertyset'>\n"
+		res = res + "<table class='propertyset'>"
 		res += "<tr><th>Name</th><td>" + @name + "</td></tr>"								if @name != "$"
 		res += "<tr><th>globalId</th><td>" + @globalId + "</td></tr>" 				
 		res += "<tr><td>LiningDepth</td><td>" + @liningDepth + "</td></tr>" 				if @liningDepth !=nil and  @liningDepth != "$"
@@ -17,7 +17,7 @@ class IFCWINDOWLININGPROPERTIES
 		res += "<tr><td>LiningToPanelOffsetX</td><td>" + @liningToPanelOffsetX + "</td></tr>"		if @liningToPanelOffsetX != nil and @liningToPanelOffsetX != "$"
 		res += "<tr><td>LiningToPanelOffsetY</td><td>" + @liningToPanelOffsetY + "</td></tr>"		if @liningToPanelOffsetY != nil	and @liningToPanelOffsetY != "$"		
 		res += "<tr><td>ShapeAspectStyle</td><td>" + @shapeAspectStyle + "</td></tr>"		if @shapeAspectStyle != "$"		
-		res = res + "\n</table>"
+		res = res + "</table>"
 		return res
 	end
 end
