@@ -3,14 +3,14 @@ class IFCPROPERTYDEFINITION
 	def to_details(str="")	
 		return if @name == nil
 		res = ""  		
-		res = res + "<table width='100%' class='propertyset'>"
-		res = res + "<tr><th colspan=2>" + encode_string(@name.strip[1..-2]) + "</td></tr>" if @name != "$"		
+		res = res + "\n<table width='100%' class='propertyset'>\n"
+		res = res + "\n\t<tr>\n\t\t<th colspan=3>" + encode_string(@name.strip[1..-2]) + "</th>\n</tr>" if @name != "$"		
 		str.toIfcObject.each { |k,obj|				
 			if ($include_properties.size == 0 or $include_properties.include? fix_it(obj.name)) and not $ignore_properties.include? fix_it(obj.name)
 				res = res +  obj.to_row	if obj.respond_to?("to_row")
 			end		
 		}
-		res = res + "</table>"
+		res = res + "\n</table>"
 		return res	
 	end
 	
