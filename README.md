@@ -1,9 +1,12 @@
 IFCWebServer-Extensions
 =======================
+What are Extensions?
+Extensions are modules or classes methods written in Ruby.
 
-IFCWebServer Extensions
+They extend the basic functionality of IFC classes and the server.
 
-http://www.ifcwebserver.org
+The class methods can be used inside server scripts or inside any report.
 
+IFCWebServer Extensions: 
 
-https://code.google.com/p/ifcwebserver/
+https://ifcwebserver.org/extensions.rb
