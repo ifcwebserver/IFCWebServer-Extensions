@@ -26,7 +26,7 @@ class IFCPROPERTYSINGLEVALUE
 		 @description =encode_string(@description) if @description != ""
 		 unit_obj=@unit.to_obj
 		 @unit = unit_obj.prefix.sub("$","").gsub(".","") + "" + unit_obj.name.gsub(".","") if  unit_obj!= nil and unit_obj.respond_to?('prefix')		 
-		"<tr><th width='50%'>" +  encode_string(@name.strip[1..-2]) + "</th><td width='50%'>" +  encode_string(@nominalValue.to_s) + "</td></tr>"
+		"\n\t<tr>\n\t<td width='50%'><b>" +  encode_string(@name.strip[1..-2]) + "</b></td><td width='50%'>" +  encode_string(@nominalValue.to_s) + "</td><td></td>\n\t</tr>"
 		#<td>" +  @unit + "</td><td>" + @description + "</td>
 	end
 	

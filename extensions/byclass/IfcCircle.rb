@@ -7,6 +7,18 @@ class IFCCIRCLE
 		(2*Math::PI*@radius.to_f*$ifcUnit["Length"]).to_s
     end
 	
+	def positionXYZ
+		@position.toIfcObject
+		obj_pos= $ifcObjects[@position.delete("#").to_i]
+		if obj_pos.class.to_s == "IFCAXIS2PLACEMENT3D"
+			x,y,z=obj_pos.xyz
+		else
+			x,y=obj_pos.xy
+			z = "z"
+		end
+		return [x,y,z]
+	end
+	
 	def xyz_array
 		@position.toIfcObject
 		obj_pos= $ifcObjects[@position.delete("#").to_i]

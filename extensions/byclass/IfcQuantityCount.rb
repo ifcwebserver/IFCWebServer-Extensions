@@ -2,7 +2,7 @@ class IFCQUANTITYCOUNT
 	def to_row		
 		unit=""
 		unit = @unit.to_obj.name if @unit.to_obj != nil and @unit.to_obj.respond_to?("name")
-		"<tr>\n<th>" + @name[1..-2] + " </th>\n<td>" + 
+		"<tr>\n<td><b>" + @name[1..-2] + " </b></td>\n<td>" + 
 		@countValue.to_s  + "</td><td>" + 
 		unit + "</td>\n</tr>"
 	end

@@ -101,7 +101,7 @@ class IFCREPRESENTATION
 	def to_svg
 		@items_list = @items.delete("(").delete(")").gsub("#","").split(",")
 		@items_list.toIfcObject
-		o=$ifcObjects[@items_list[items_list.length].to_i]
+		o=$ifcObjects[@items_list[@items_list.length].to_i]
 		if o.respond_to?('to_svg')
 			o.to_svg
 		else
@@ -110,14 +110,12 @@ class IFCREPRESENTATION
 	end
 	
 	def to_dae(objectPlacement=nil,*args)
-		@items_list = @items.delete("(").delete(")").gsub("#","").split(",")
-		@items_list.toIfcObject
-		@items_list.each { |it|
-		o=$ifcObjects[it.to_i]		
+		@items_list = @items.delete("(").delete(")").gsub("#","")
+		@items_list.toIfcObject.each { |k,o|			
 		if o.respond_to?('to_dae')
-			Dae.to_dae(self,objectPlacement)			
+			Dae.to_dae(o,objectPlacement)			
 		else
-			$log["<br>" + __LINE__ + " Line:" + __LINE__.to_s ]= "  " +  o.class.to_s + " to_dae is not yet supported"					
+			$log["<br>#{ __LINE__ } Line:#{ __LINE__}"]= "IFCREPRESENTATION:to_dae  "  + "--class:" +  o.class.to_s + " to_dae is not yet supported"					
 		end
 		}
 	end

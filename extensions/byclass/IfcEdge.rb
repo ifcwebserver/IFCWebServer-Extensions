@@ -10,8 +10,9 @@ class IFCEDGE
   end
   
   def to_dae_geometry(mesh_id="")	
-    $edge_size = 0.1 if $edge_size == nil
+    $edge_size = 0.3 if $edge_size == nil
 	Dae.line_geometry(self,@edgeStart.to_obj.vertexGeometry.to_obj,@edgeEnd.to_obj.vertexGeometry.to_obj,$edge_size,$edge_size,$edge_size)
+	
   end
   
   def to_dae_node(ifclocalplacemenet=nil)

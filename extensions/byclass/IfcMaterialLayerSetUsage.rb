@@ -11,10 +11,10 @@ class IFCMATERIALLAYERSETUSAGE
 		layer_count += 1	
 		}		
 		layerSetName = forLayerSetObj.layerSetName				
-		obj.instance_variable_set("@ext_MaterialLayerSetUsage_Material_name", res  )		
+		obj.instance_variable_set("@ext_MaterialLayerSetUsage_Material_name", encode_string(res))		
 		obj.instance_variable_set("@ext_MaterialLayerSetUsage_Layer_count", layer_count)	
 		obj.instance_variable_set("@ext_MaterialLayerSetUsage_Total_thickness", totalThickness)	
-		obj.instance_variable_set("@ext_MaterialLayerSetUsage_LayerSetName", layerSetName)
+		obj.instance_variable_set("@ext_MaterialLayerSetUsage_LayerSetName", encode_string(layerSetName))
 		obj.instance_variable_set("@ext_MaterialLayerSetUsage_OffsetFromReferenceLine", @offsetFromReferenceLine.to_f)		
 	end
 end

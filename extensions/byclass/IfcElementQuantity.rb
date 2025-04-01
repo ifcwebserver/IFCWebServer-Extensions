@@ -5,9 +5,8 @@ class IFCELEMENTQUANTITY
 		#res = res + "<br><b>Description:</b>" + @description + "<br>" if @description != "$"
 		#res = res +"<b>GlobalId:</b>" + @globalId 	+ "<br>"	
 		#res = res +"<b>IFC_LineID:</b>" + @line_id.to_s 		
-		res = res + "<table  class='propertyset'>\n"
-		res = res + "<tr><th colspan=3>" + @name.strip[1..-2] + "</th></tr>" if @name != "$"
-		res = res + "<tr><th></th><th>Value</th><th>Unit</th></tr>"
+		res = res + "<table width='100%' class='propertyset'>"
+		res = res + "\n\t<tr>\n\t<th colspan=3>" + @name.strip[1..-2] + "</th></tr>" if @name != "$"
 		str.toIfcObject.each { |k,obj|
 			res = res +  obj.to_row	
 		}
@@ -61,6 +60,5 @@ class IFCELEMENTQUANTITY
 		res[att_name]=att_value if att_name and att_value
 		}		
 		return res		
-	end
-	
+	end	
 end

@@ -1,7 +1,8 @@
 class IFCPROPERTYSET	
 attr_accessor :html_properties
 	def initialize1(args=[])
-	@html_properties=property_details
+	  @html_properties=property_details
+	  
 	end
 	def property_details
 		@hasProperties.to_s.toIfcObject					

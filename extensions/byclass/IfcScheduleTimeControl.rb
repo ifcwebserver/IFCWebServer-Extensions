@@ -2,10 +2,10 @@ class IFCSCHEDULETIMECONTROL
     def detail
         res= {}
         res["ActualStart"] = self.actualStart	if self.actualStart != "$"
-        res["EarlyStart"] =  self.earlyStart.to_obj.date_time if self.earlyStart != "$"
+        res["EarlyStart"] =  self.earlyStart.to_obj.date_time if  self.earlyStart != "$"
         res["LateStart"] = self.lateStart.to_obj.date_time if self.lateStart != "$"
         res["ScheduleStart"]  = self.scheduleStart.to_obj.date_time if self.scheduleStart != "$"
-        res["ActualFinish"] = sef.actualFinish.to_obj.date_time if self.actualFinish != "$"
+        res["ActualFinish"] = self.actualFinish.to_obj.date_time if self.actualFinish != "$"
         res["EarlyFinish"] = self.earlyFinish.to_obj.date_time if self.earlyFinish != "$"
         res["LateFinish"] =self.lateFinish.to_obj.date_time if self.lateFinish != "$"
         res["ScheduleFinish"] =self.scheduleFinish.to_obj.date_time if self.scheduleFinish != "$"

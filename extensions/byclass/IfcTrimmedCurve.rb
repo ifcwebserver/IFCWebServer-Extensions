@@ -6,6 +6,9 @@ class IFCTRIMMEDCURVE
 	def initialize1(args=[])		
 		parse
 	end
+	
+
+	
 #private
 	def parse
 		@basisCurve=""
