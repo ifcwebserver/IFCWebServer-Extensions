@@ -10,7 +10,7 @@ attr_accessor :html_properties
 	end	
 	
 	def properties	
-	#doc:<div class='documentaion' >Return an alphabitic sorted array of property names defined insinde the PropertySet object</div>
+	#doc:<div class='documentaion' >Return an alphabetic sorted array of property names defined inside the PropertySet object</div>
 		res=[]
 		@hasProperties.to_s.toIfcObject.each do |k,v| 
 		res << v.name.gsub("'","")
