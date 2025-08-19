@@ -43,7 +43,7 @@ def IFCObject.as_link
 end
 
 def IFC_CLASS_NAME.where (cond,output)
-#doc:<div class='documentaion' >Return a hash of user defined output applied on IFCCLASS object's instances which meet the 'cond' expression, 'all' or true can be used to retrive all instances, 'cond' can be any valid Ruby expression applied on each object instance, the 'o' is used as place holder for object instances <br><b>IFCWINDOW.where("all","o.area > 2.00")</b> </div>
+#doc:<div class='documentaion' >Return a hash of user defined output applied on IFCCLASS object's instances which meet the 'cond' expression, 'all' or true can be used to retrieve all instances, 'cond' can be any valid Ruby expression applied on each object instance, the 'o' is used as place holder for object instances <br><b>IFCWINDOW.where("all","o.area > 2.00")</b> </div>
 end
 end
 eos
