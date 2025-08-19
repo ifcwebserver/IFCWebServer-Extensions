@@ -27,7 +27,7 @@ class IFCOBJECT
   end	
   
   def db_pset
-    #doc:<div class='documentaion' >return a table with all object proeprties saved in the BIM-DB</div>
+    #doc:<div class='documentaion' >return a table with all object properties saved in the BIM-DB</div>
     db = SQLite3::Database.new $cache_folder + "/" + $username + "/" + $ifc_file_name  + "/" +  $ifc_file_name.sub(".ifc","_Pset.sqlite")
     res="<table><tr><th>Pset</th><th>Property</th><th>Value</th></tr>"
     db.execute( "select PsetName, propertyname, propertyvalue from properties where step_id = #{self.line_id} order by pSetName,propertyname") do |row|
@@ -61,7 +61,7 @@ class IFCOBJECT
   end
   
   def db_get_property(propertyname, psetName= "")
-       #doc:<div class='documentaion' >return the value of object proeprty.</div>
+       #doc:<div class='documentaion' >return the value of object property.</div>
       db = SQLite3::Database.new $cache_folder + "/" + $username + "/" + $ifc_file_name  + "/" +  $ifc_file_name.sub(".ifc","_Pset.sqlite")
       res = ""
      if psetName != ""
