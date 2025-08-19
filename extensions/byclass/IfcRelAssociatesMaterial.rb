@@ -1,4 +1,4 @@
-class IFCRELASSOCIATESMATERIAL
+	class IFCRELASSOCIATESMATERIAL
   def initialize1(args=[])			
 	attach_to_obj
 	$depend_on={} if $depend_on == nil
@@ -21,7 +21,7 @@ class IFCRELASSOCIATESMATERIAL
 	def qto			
 	#doc:<div class='documentaion' >This method can be used to create a QuantityTakeOff report.</br>
 	#doc:Beside selecting IfcRelAssociatesMaterial class we have to select the IfcRelDefinedByProperties,IfcRelDefinesByType classes as well.
-	#doc:The fellowing attributes will be used for calculations:<ul><li>Width</li><li>Height</li><li>Length</li><li>Perimeter</li><li>Volume,NetVolume, GrossVolume</li><li>Area, GrossArea ,GrossSideArea, NetSideArea, GrossFootprintArea,NetFootprintArea, NetWallArea, GrossWallArea</li></ul>
+	#doc:The following attributes will be used for calculations:<ul><li>Width</li><li>Height</li><li>Length</li><li>Perimeter</li><li>Volume,NetVolume, GrossVolume</li><li>Area, GrossArea ,GrossSideArea, NetSideArea, GrossFootprintArea,NetFootprintArea, NetWallArea, GrossWallArea</li></ul>
 	#doc:</div>
 	sum_area = 0
 	sum_volume = 0
